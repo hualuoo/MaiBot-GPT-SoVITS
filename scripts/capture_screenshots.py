@@ -36,7 +36,7 @@ from plugin import create_plugin  # noqa: E402
 
 DEFAULT_MAIBOT = os.environ.get("MAIBOT_ROOT", "").strip() or str(ROOT.parent / "MaiBot")
 DISPLAY_ROOT = "D:/GPT-SoVITS"
-DISPLAY_PLUGIN = "D:/MaiBot/plugins/local.gpt-sovits-tts"
+DISPLAY_PLUGIN = "D:/MaiBot/plugins/github.hualuoo.maibot-gpt-sovits"
 CHROME = "C:/Program Files/Google/Chrome/Application/chrome.exe"
 # 演示目录中需要的标准底模（相对 GPT_SoVITS/pretrained_models，本机没有的会跳过）。
 PRETRAINED = (

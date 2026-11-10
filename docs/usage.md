@@ -27,7 +27,7 @@
 
 ## 合成日志
 
-每次调用语音合成（`/tts` 命令、语音工具、自动语音、设置页试听和加载模型），插件都会在 MaiBot 日志里输出两行，终端和 WebUI「日志」页都能看到。WebUI 日志页的模块一栏显示为 `plugin.local.gpt-sovits-tts`，也可以搜索 **“语音合成”** 筛选：
+每次调用语音合成（`/tts` 命令、语音工具、自动语音、设置页试听和加载模型），插件都会在 MaiBot 日志里输出两行，终端和 WebUI「日志」页都能看到。WebUI 日志页的模块一栏显示为 `plugin.github.hualuoo.maibot-gpt-sovits`，也可以搜索 **“语音合成”** 筛选：
 
 ```text
 [语音合成] 开始 · 命令 /tts · 群 测试群（123456） · 角色 黍（启用 5 个情感） · 文本 10 字「唉，今天的雨下个不停」
@@ -52,7 +52,7 @@
 MaiBot 按日志的模块名决定颜色，配置写在 MaiBot 自己的 `src/common/logger_color_and_mapping.py` 里，插件运行在独立进程中，无法自行设置。要让本插件的日志在终端和 WebUI 日志页显示为天蓝色（`#87d7ff`，即 MaiBot 终端里 INFO 时间戳使用的“天蓝色”），在 `MODULE_COLORS` 中加入一行：
 
 ```python
-    "plugin.local.gpt-sovits-tts": ("#87d7ff", None, False),  # GPT-SoVITS 语音合成插件：天蓝色
+    "plugin.github.hualuoo.maibot-gpt-sovits": ("#87d7ff", None, False),  # GPT-SoVITS 语音合成插件：天蓝色
 ```
 
 另外，MaiBot 的 WebUI 日志页在打开或刷新时加载的历史日志，会把插件日志的模块显示为“插件运行器”，因此不会套用颜色（实时推送的日志不受影响）。如需历史日志也显示颜色，把 `src/webui/logs_ws.py` 中 `_format_log_entry` 的第一行改为与实时推送一致：

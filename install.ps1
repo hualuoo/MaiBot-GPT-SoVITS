@@ -5,16 +5,18 @@
 )
 $ErrorActionPreference = "Stop"
 $source = $PSScriptRoot
+$pluginId = (Get-Content -LiteralPath (Join-Path $source "_manifest.json") -Raw -Encoding UTF8 | ConvertFrom-Json).id
+if ([string]::IsNullOrWhiteSpace($pluginId)) { throw "Source manifest must declare a plugin ID." }
 # Prefer an existing installation with the same stable manifest ID, including ZIP installs.
 if (-not (Test-Path (Join-Path $MaiBotPath "bot.py"))) { throw "MaiBot bot.py not found: $MaiBotPath" }
 $existing = @(Get-ChildItem -LiteralPath (Join-Path $MaiBotPath "plugins") -Directory -ErrorAction SilentlyContinue | Where-Object {
     $manifest = Join-Path $_.FullName "_manifest.json"
     if (Test-Path $manifest) {
-        try { (Get-Content -LiteralPath $manifest -Raw -Encoding UTF8 | ConvertFrom-Json).id -eq "local.gpt-sovits-tts" } catch { $false }
+        try { (Get-Content -LiteralPath $manifest -Raw -Encoding UTF8 | ConvertFrom-Json).id -eq $pluginId } catch { $false }
     }
 })
 if ($existing.Count -gt 1) { throw "Duplicate GPT-SoVITS installations found. Keep exactly one before updating." }
-$target = if ($existing.Count -eq 1) { $existing[0].FullName } else { Join-Path $MaiBotPath "plugins/local.gpt-sovits-tts" }
+$target = if ($existing.Count -eq 1) { $existing[0].FullName } else { Join-Path $MaiBotPath ("plugins/" + $pluginId) }
 if ([IO.Path]::GetFullPath($source) -eq [IO.Path]::GetFullPath($target)) { throw "Run this script from the development or release directory, not the installed plugin itself." }
 if ((Test-Path $target) -and -not $Force) { throw "Target already exists. Back it up and use -Force to update; config.toml is preserved." }
 New-Item -ItemType Directory -Force -Path $target | Out-Null

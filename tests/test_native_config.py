@@ -66,7 +66,7 @@ class NativeConfigTests(unittest.IsolatedAsyncioTestCase):
 
     def schema(self, plugin=None):
         return (plugin or self.plugin).get_webui_config_schema(
-            plugin_id="local.gpt-sovits-tts", plugin_name="语音合成", plugin_version="测试版",
+            plugin_id="github.hualuoo.maibot-gpt-sovits", plugin_name="语音合成", plugin_version="测试版",
             plugin_description="原生配置", plugin_author="测试")
 
     def fields(self, plugin=None):
@@ -267,7 +267,7 @@ class NativeConfigTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(inspect.iscoroutinefunction(self.plugin.get_webui_config_schema))
         with patch.object(module, "scan_models", side_effect=AssertionError("Schema 不能扫描")):
             schema = self.schema()
-        self.assertEqual(schema["plugin_id"], "local.gpt-sovits-tts")
+        self.assertEqual(schema["plugin_id"], "github.hualuoo.maibot-gpt-sovits")
         self.assertEqual(len(schema["runtime_widgets"]), 6)
         fields = {**schema["sections"]["models"]["fields"],
                   **schema["sections"]["original_weights"]["fields"]}

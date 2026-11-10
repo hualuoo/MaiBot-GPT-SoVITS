@@ -90,6 +90,19 @@ class ReleaseTests(unittest.TestCase):
             self.assertNotRegex(path.read_text(encoding="utf-8"), r"MaiBot-GPT-SoVITS-\d", path.name)
         self.assertIn("MaiBot-GPT-SoVITS-<版本>.zip", (ROOT / "docs" / "installation.md").read_text(encoding="utf-8"))
 
+    def test_plugin_identity_matches_installation_and_log_documentation(self):
+        plugin_id = manifest()["id"]
+        self.assertEqual(plugin_id, "github.hualuoo.maibot-gpt-sovits")
+        self.assertRegex(plugin_id, r"^[a-z0-9]+(?:[.-][a-z0-9]+)+$")
+        installation = (ROOT / "docs" / "installation.md").read_text(encoding="utf-8")
+        self.assertIn(f"| 插件 ID | `{plugin_id}` |", installation)
+        for name in ("docs/usage.md", "maibot-patch/sky-blue-log.patch"):
+            self.assertIn(f"plugin.{plugin_id}", (ROOT / name).read_text(encoding="utf-8"), name)
+        script = (ROOT / "install.ps1").read_text(encoding="utf-8-sig")
+        self.assertIn('$pluginId = (Get-Content -LiteralPath (Join-Path $source "_manifest.json")', script)
+        self.assertIn(".id -eq $pluginId", script)
+        self.assertIn('Join-Path $MaiBotPath ("plugins/" + $pluginId)', script)
+
     def test_publication_repository_and_author_are_consistent(self):
         info = manifest()
         self.assertEqual(info["urls"]["repository"], "https://github.com/hualuoo/MaiBot-GPT-SoVITS")

@@ -6,7 +6,7 @@ index c5fd8d344..383bdc16f 100644
      "plugin_runtime.runner.manifest_validator": ("#5fafff", None, False),
      "plugin_runtime.runner.plugin_loader": ("#00afaf", None, False),
      "plugin.maibot-team.napcat-adapter": ("#00af87", None, False),
-+    "plugin.local.gpt-sovits-tts": ("#87d7ff", None, False),  # GPT-SoVITS 语音合成插件：天蓝色
++    "plugin.github.hualuoo.maibot-gpt-sovits": ("#87d7ff", None, False),  # GPT-SoVITS 语音合成插件：天蓝色
      "webui": ("#5f87ff", None, False),
      "webui.app": ("#5f87d7", None, False),
      "webui.api": ("#5fafff", None, False),

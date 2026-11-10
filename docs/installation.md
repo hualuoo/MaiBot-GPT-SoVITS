@@ -4,7 +4,7 @@
 
 | 项目 | 要求 |
 |---|---|
-| 插件 ID | `local.gpt-sovits-tts` |
+| 插件 ID | `github.hualuoo.maibot-gpt-sovits` |
 | MaiBot | 1.3.6 ～ 1.4.x |
 | Python | 3.12 及以上（使用 MaiBot 的运行环境） |
 | 插件 SDK | maibot-plugin-sdk 2.20.0 ～ 2.21.99（验证版本 2.21.0） |
@@ -36,7 +36,7 @@ GPT-SoVITS 的部署方法见 [部署 GPT-SoVITS](gpt-sovits.md)。
 powershell -NoProfile -ExecutionPolicy Bypass -File ./install.ps1 -MaiBotPath "D:/MaiBot" -Force
 ```
 
-脚本会按插件 ID 找到已安装的目录（包括通过 ZIP 安装的 `local_gpt-sovits-tts`），只覆盖程序文件，**保留 `config.toml` 和 `data/`**；完成后在 MaiBot 中重载插件即可。首次安装可省略 `-Force`。
+脚本会读取源目录 Manifest 中的插件 ID，找到相同 ID 的已安装目录（不依赖文件夹名称），只覆盖程序文件，**保留 `config.toml` 和 `data/`**；完成后在 MaiBot 中重载插件即可。首次安装可省略 `-Force`。
 
 ## 依赖
 
