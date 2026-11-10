@@ -118,14 +118,19 @@ class ReleaseTests(unittest.TestCase):
         installation = (ROOT / "docs" / "installation.md").read_text(encoding="utf-8")
         self.assertIn("| MaiBot | 1.3.6 ～ 1.4.x |", installation)
 
-    def test_community_group_is_inline_at_end_of_introduction(self):
+    def test_community_group_and_video_are_centered_directly_below_badges(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         paragraphs = readme.split("\n\n")
-        intro = next(index for index, paragraph in enumerate(paragraphs) if paragraph.startswith("基于 "))
-        self.assertTrue(paragraphs[intro].endswith("自动切换对应语气的模型和参考音频。QQ 交流群：**1131116861**"))
-        self.assertNotIn("\n", paragraphs[intro])
-        self.assertTrue(paragraphs[intro + 1].startswith("![设置页总览"))
+        badges = next(index for index, paragraph in enumerate(paragraphs) if "img.shields.io/badge/" in paragraph)
+        video_url = "https://www.bilibili.com/video/BV1dP4i68EbA/"
+        community = ('<p align="center">\n'
+                     f'  QQ 交流群：<strong>1131116861</strong> · <a href="{video_url}">效果预览视频</a>\n'
+                     '</p>')
+        self.assertEqual(paragraphs[badges + 1], community)
+        self.assertTrue(paragraphs[badges + 2].startswith("基于 "))
+        self.assertTrue(paragraphs[badges + 3].startswith("![设置页总览"))
         self.assertEqual(readme.count("1131116861"), 1)
+        self.assertEqual(readme.count(video_url), 1)
         self.assertNotIn("## 交流", readme)
         self.assertNotIn("[![QQ", readme)
 

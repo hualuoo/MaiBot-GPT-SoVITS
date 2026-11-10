@@ -10,7 +10,11 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="license"></a>
 </p>
 
-基于 [GPT-SoVITS](https://github.com/RVC-Boss/GPT-SoVITS) 的 **文本转语音** 插件，让 MaiBot（麦麦）用你指定的声音发送语音消息：语音模型 **CPU/GPU 本地部署**，几秒参考音频即可 **音色克隆**；多情感角色由 MaiBot 的 LLM 对每句话做 **情感分类**，自动切换对应语气的模型和参考音频。QQ 交流群：**1131116861**
+<p align="center">
+  QQ 交流群：<strong>1131116861</strong> · <a href="https://www.bilibili.com/video/BV1dP4i68EbA/">效果预览视频</a>
+</p>
+
+基于 [GPT-SoVITS](https://github.com/RVC-Boss/GPT-SoVITS) 的 **文本转语音** 插件，让 MaiBot（麦麦）用你指定的声音发送语音消息：语音模型 **CPU/GPU 本地部署**，几秒参考音频即可 **音色克隆**；多情感角色由 MaiBot 的 LLM 对每句话做 **情感分类**，自动切换对应语气的模型和参考音频。
 
 ![设置页总览：左侧是五步设置，右侧是当前配置检查与每一步的状态](docs/images/setup-overview.png)
 
