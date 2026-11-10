@@ -90,6 +90,21 @@ class ReleaseTests(unittest.TestCase):
             self.assertNotRegex(path.read_text(encoding="utf-8"), r"MaiBot-GPT-SoVITS-\d", path.name)
         self.assertIn("MaiBot-GPT-SoVITS-<版本>.zip", (ROOT / "docs" / "installation.md").read_text(encoding="utf-8"))
 
+    def test_publication_repository_and_author_are_consistent(self):
+        info = manifest()
+        self.assertEqual(info["urls"]["repository"], "https://github.com/hualuoo/MaiBot-GPT-SoVITS")
+        self.assertFalse(info["urls"]["repository"].endswith(".git"))
+        self.assertEqual(info["author"], {"name": "HuaLuoo", "url": "https://github.com/hualuoo/"})
+        license_text = (ROOT / "LICENSE").read_text(encoding="utf-8")
+        self.assertIn("Copyright (c) 2026 HuaLuoo", license_text)
+
+    def test_sdk_range_matches_requirements_and_installation_documentation(self):
+        self.assertEqual(manifest()["sdk"], {"min_version": "2.20.0", "max_version": "2.21.99"})
+        requirements = (ROOT / "requirements.txt").read_text(encoding="utf-8").splitlines()
+        self.assertIn("maibot-plugin-sdk>=2.20.0,<2.22", requirements)
+        installation = (ROOT / "docs" / "installation.md").read_text(encoding="utf-8")
+        self.assertIn("| 插件 SDK | maibot-plugin-sdk 2.20.0 ～ 2.21.99（验证版本 2.21.0） |", installation)
+
     def test_readme_title_is_centered(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         title = "MaiBot GPT-SoVITS 语音合成插件"

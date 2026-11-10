@@ -7,7 +7,7 @@
 | 插件 ID | `local.gpt-sovits-tts` |
 | MaiBot | 1.3.6 ～ 1.4.x |
 | Python | 3.12 及以上（使用 MaiBot 的运行环境） |
-| 插件 SDK | maibot-plugin-sdk 2.20+（验证版本 2.21.0） |
+| 插件 SDK | maibot-plugin-sdk 2.20.0 ～ 2.21.99（验证版本 2.21.0） |
 | Python 依赖 | aiohttp、tomlkit（MaiBot 环境通常已自带） |
 | GPT-SoVITS | 需运行 `api_v2.py`（不是 Gradio WebUI，也不是旧版 `api.py`） |
 
