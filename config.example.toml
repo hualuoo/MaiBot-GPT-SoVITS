@@ -1,0 +1,65 @@
+# 复制为安装目录中的 config.toml，或在 MaiBot WebUI 编辑配置。
+[plugin]
+enabled = true
+config_version = "1.0.0"
+
+[api]
+base_url = "http://127.0.0.1:9880"
+timeout = 180.0
+max_audio_bytes = 8388608
+
+[models]
+# 本机模型目录：GPT-SoVITS 安装目录，设置页第二步扫描其中的底模与训练权重。
+# Windows 路径请使用正斜杠，例如 "D:/GPT-SoVITS"。
+root = ""
+# 底模版本由设置页根据所选 SoVITS 权重自动识别；custom 表示自定义权重。
+base_model = "custom"
+gpt_weights = ""
+sovits_weights = ""
+# 可选角色LoRA .pth；不是GPT .ckpt；不使用时保留以下选项。
+lora_weights = "（不使用 LoRA）"
+
+[role]
+# original 为普通模式（手动选择模型和参考音频）；role 为角色模式，读取 GPT-SoVITS 目录下的 maibot_roles/<角色>/role.json。
+mode = "original"
+# 可同时启用多种情感；空列表表示只启用默认情感。
+emotions = []
+role_id = ""
+emotion = "neutral"
+# 启用 2 个以上情感时，合成前调用 MaiBot 的 LLM 判断每句话的情感；失败时使用默认情感。
+llm_emotion = true
+# MaiBot 模型任务名；fast_model 留空时 MaiBot 会自动使用 utils。
+llm_task = "fast_model"
+
+[voice]
+# 普通模式的参考音频：放在 GPT-SoVITS 目录下的 maibot_refs，在设置页第三步选择（3～10 秒）。
+ref_audio_path = ""
+prompt_text = ""
+prompt_lang = "zh"
+text_lang = "zh"
+aux_ref_audio_paths = []
+text_split_method = "cut5"
+speed_factor = 1.0
+top_k = 5
+top_p = 1.0
+temperature = 1.0
+seed = -1
+parallel_infer = false
+
+[behavior]
+tool_enabled = true
+max_text_length = 300
+cooldown_seconds = 5.0
+# 聊天流 ID 不是 QQ 群号；空列表允许全部聊天流。
+allowed_stream_ids = []
+send_text = false
+
+[auto_voice]
+# 发送前转换普通机器人文字；默认关闭，不影响现有工具/命令。
+enabled = false
+frequency_mode = "probability"
+probability_percent = 50
+every_n = 3
+min_interval_seconds = 5.0
+follow_emotion = true
+keep_text = false

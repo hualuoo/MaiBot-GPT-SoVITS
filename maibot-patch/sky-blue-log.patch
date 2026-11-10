@@ -1,0 +1,26 @@
+diff --git a/src/common/logger_color_and_mapping.py b/src/common/logger_color_and_mapping.py
+index c5fd8d344..383bdc16f 100644
+--- a/src/common/logger_color_and_mapping.py
++++ b/src/common/logger_color_and_mapping.py
+@@ -64,6 +64,7 @@ MODULE_COLORS: Dict[str, Tuple[str, Optional[str], bool]] = {
+     "plugin_runtime.runner.manifest_validator": ("#5fafff", None, False),
+     "plugin_runtime.runner.plugin_loader": ("#00afaf", None, False),
+     "plugin.maibot-team.napcat-adapter": ("#00af87", None, False),
++    "plugin.local.gpt-sovits-tts": ("#87d7ff", None, False),  # GPT-SoVITS 语音合成插件：天蓝色
+     "webui": ("#5f87ff", None, False),
+     "webui.app": ("#5f87d7", None, False),
+     "webui.api": ("#5fafff", None, False),
+diff --git a/src/webui/logs_ws.py b/src/webui/logs_ws.py
+index 3ab2d178a..b9589b5c8 100644
+--- a/src/webui/logs_ws.py
++++ b/src/webui/logs_ws.py
+@@ -47,7 +47,8 @@ def _resolve_module_style(module_name: str) -> Dict:
+ 
+ def _format_log_entry(raw_entry: Dict, log_id: str) -> Dict:
+     """转换为前端日志查看器使用的数据结构。"""
+-    module_name = str(raw_entry.get("logger_name", "") or raw_entry.get("module", ""))
++    # 与实时推送一致：插件运行器转发的日志只有 logger 字段（module 为 "<runner>"）。
++    module_name = str(raw_entry.get("logger_name") or raw_entry.get("logger") or raw_entry.get("module") or "")
+     formatted_log = {
+         "id": log_id,
+         "timestamp": raw_entry.get("timestamp", ""),

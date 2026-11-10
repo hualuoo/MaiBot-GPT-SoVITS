@@ -1,0 +1,1280 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>GPT-SoVITS 语音设置</title>
+<style>
+:root{--maibot-fallback-background:#fafafa;--maibot-fallback-surface:#fff;--maibot-fallback-foreground:#202124;--maibot-fallback-muted:#62666b;--maibot-fallback-soft:#f5f5f5;--maibot-fallback-border:#dedfe1;--maibot-fallback-primary:#25685c;--maibot-fallback-primary-foreground:#fff;--maibot-fallback-danger:#b42332;color-scheme:light}
+:root.dark{--maibot-fallback-background:#141619;--maibot-fallback-surface:#1c1f23;--maibot-fallback-foreground:#e9eaec;--maibot-fallback-muted:#a8adb4;--maibot-fallback-soft:#252930;--maibot-fallback-border:#3c4149;--maibot-fallback-primary:#8ccdbf;--maibot-fallback-primary-foreground:#102c26;--maibot-fallback-danger:#ff9da6;color-scheme:dark}
+@media(prefers-color-scheme:dark){:root:not(.light):not(.dark){--maibot-fallback-background:#141619;--maibot-fallback-surface:#1c1f23;--maibot-fallback-foreground:#e9eaec;--maibot-fallback-muted:#a8adb4;--maibot-fallback-soft:#252930;--maibot-fallback-border:#3c4149;--maibot-fallback-primary:#8ccdbf;--maibot-fallback-primary-foreground:#102c26;--maibot-fallback-danger:#ff9da6;color-scheme:dark}}
+*{box-sizing:border-box}body{margin:0}.maibot-page{background:var(--maibot-background,var(--maibot-fallback-background));color:var(--maibot-foreground,var(--maibot-fallback-foreground));font:14px/1.6 var(--maibot-font-body,system-ui,sans-serif)}
+.shell{max-width:1380px;margin:0 auto;padding:24px}.page-head,.section-head,.job-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px}h1{font-size:22px;margin:0;font-weight:600}h2{font-size:17px;margin:0 0 4px;font-weight:600}h3{font-size:14px;margin:0}p{margin:0}.muted,.hint,.job-meta{color:var(--maibot-muted,var(--maibot-fallback-muted))}.hint,.job-meta{font-size:12px;line-height:1.65}
+.maibot-card{padding:20px;border:1px solid var(--maibot-border,var(--maibot-fallback-border));border-radius:var(--maibot-radius,8px);background:var(--maibot-surface,var(--maibot-fallback-surface))}.main-column{display:grid;gap:16px;min-width:0}.layout{display:grid;grid-template-columns:minmax(0,3fr) minmax(300px,2fr);gap:20px;align-items:start}.side-column{display:grid;gap:16px;min-width:0;position:sticky;top:20px}.side-column .summary-card{margin-top:0}.side-column .summary{display:grid;gap:10px}.summary dd{overflow-wrap:anywhere;min-width:0}.mode-panel{margin-top:18px;border:0;padding:0;background:transparent}.mode-tabs{display:flex;gap:8px;margin-top:16px;border-bottom:1px solid var(--maibot-border,var(--maibot-fallback-border));padding-bottom:10px}.mode-tabs [aria-selected="true"]{border-color:var(--maibot-primary,var(--maibot-fallback-primary));color:var(--maibot-primary,var(--maibot-fallback-primary));background:var(--maibot-soft,var(--maibot-fallback-soft))}.check-summary{white-space:pre-line;overflow-wrap:anywhere}.check-issues{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:8px}.check-issues li{overflow-wrap:anywhere}.parameter-check{display:flex;align-items:center;gap:8px}.parameter-check input{width:18px;height:18px;min-height:0}.parameter-group{border:0;margin:0;padding:0}.parameter-group legend{font-weight:600;margin-bottom:12px}.preview-stack{display:grid;gap:16px;min-width:0}@media(max-width:899px){.layout{grid-template-columns:minmax(0,1fr)}.side-column{position:static}.steps{flex-wrap:wrap}.steps .step{flex:1 1 145px}.mode-tabs{flex-wrap:wrap}}.section-number{display:block;font-size:12px;color:var(--maibot-muted,var(--maibot-fallback-muted));margin-bottom:4px}
+.maibot-input,.maibot-select{width:100%;min-width:0;min-height:38px;padding:8px 10px;color:inherit;font:inherit;border:1px solid var(--maibot-border,var(--maibot-fallback-border));border-radius:var(--maibot-radius,6px);background:var(--maibot-soft,var(--maibot-fallback-soft))}textarea.maibot-input{resize:vertical;min-height:86px}.path{font-family:var(--maibot-font-mono,ui-monospace,monospace);font-size:12px}
+.maibot-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:36px;padding:7px 13px;color:inherit;font:inherit;border:1px solid var(--maibot-border,var(--maibot-fallback-border));border-radius:var(--maibot-radius,6px);background:var(--maibot-surface,var(--maibot-fallback-surface));cursor:pointer;text-decoration:none;text-align:center}.maibot-button-primary{background:var(--maibot-primary,var(--maibot-fallback-primary));color:var(--maibot-primary-foreground,var(--maibot-fallback-primary-foreground));border-color:var(--maibot-primary,var(--maibot-fallback-primary))}.maibot-button-danger{color:var(--maibot-danger,var(--maibot-fallback-danger))}:disabled{opacity:.55;cursor:not-allowed}:focus-visible{outline:2px solid var(--maibot-primary,var(--maibot-fallback-primary));outline-offset:3px}
+.steps{display:flex;gap:8px;margin-bottom:16px}.step{flex:1}.step[aria-current="step"]{border-color:var(--maibot-primary,var(--maibot-fallback-primary));color:var(--maibot-primary,var(--maibot-fallback-primary))}.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:grid;align-content:start;gap:6px;min-width:0}.full{grid-column:1/-1}label{font-size:13px;font-weight:600}.label-row{display:flex;justify-content:space-between;gap:12px}.inline-field{display:flex;align-items:start;gap:8px}.inline-field input{flex:1;min-width:0}.inline-field button{flex:none}.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:18px}.actions .grow{flex:1}.divider{border:0;border-top:1px solid var(--maibot-border,var(--maibot-fallback-border));margin:20px 0}
+.pill{display:inline-flex;gap:6px;align-items:center;padding:3px 9px;border:1px solid var(--maibot-border,var(--maibot-fallback-border));border-radius:var(--maibot-radius,6px);font-size:12px}.pill[data-tone="success"]{color:var(--maibot-primary,var(--maibot-fallback-primary))}.pill[data-tone="error"],[data-tone="error"]{color:var(--maibot-danger,var(--maibot-fallback-danger))}.dot{width:6px;height:6px;background:currentColor;border-radius:50%}.status-box{padding:10px 12px;margin-bottom:16px;border:1px solid var(--maibot-border,var(--maibot-fallback-border));border-radius:var(--maibot-radius,6px);background:var(--maibot-soft,var(--maibot-fallback-soft));overflow-wrap:anywhere}.warning strong{display:block}.help-link{padding:0;border:0;background:none;color:var(--maibot-primary,var(--maibot-fallback-primary));font:inherit;text-decoration:underline;cursor:pointer}
+.summary{display:flex;flex-wrap:wrap;gap:12px 28px;margin:0}.summary div{display:flex;gap:8px}.summary dt{color:var(--maibot-muted,var(--maibot-fallback-muted))}.summary dd{margin:0}.summary-card{margin-top:16px}.footer{margin-top:16px;color:var(--maibot-muted,var(--maibot-fallback-muted));font-size:12px}.audio-block{margin-top:16px}.audio-block audio{display:block;width:100%;margin:10px 0}.job-message{overflow-wrap:anywhere}.skip{position:absolute;left:16px;top:-100px}.skip:focus{top:8px}[hidden]{display:none!important}svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:520px){.shell{padding:16px 12px}.fields{grid-template-columns:1fr}.maibot-card{padding:16px}.page-head,.section-head{gap:10px;align-items:flex-start}h1{font-size:19px}.actions>.maibot-button{flex:1;min-width:130px}.actions .grow{display:none}.inline-field{flex-wrap:wrap}.inline-field input{flex-basis:100%}.pill{white-space:normal}.summary{display:grid;gap:8px}.steps .maibot-button{padding:7px}}
+:root{--status-ok:#1e7e34;--status-ok-soft:rgba(30,126,52,.1);--status-bad:#c5221f;--status-bad-soft:rgba(197,34,31,.08)}:root.dark{--status-ok:#81c995;--status-ok-soft:rgba(129,201,149,.14);--status-bad:#f28b82;--status-bad-soft:rgba(242,139,130,.14)}@media(prefers-color-scheme:dark){:root:not(.light):not(.dark){--status-ok:#81c995;--status-ok-soft:rgba(129,201,149,.14);--status-bad:#f28b82;--status-bad-soft:rgba(242,139,130,.14)}}
+.step-status-list{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px}.step-status{display:grid;gap:3px;width:100%;padding:10px 12px;text-align:left;color:inherit;font:inherit;border:1px solid var(--maibot-border,var(--maibot-fallback-border));border-left:4px solid var(--maibot-border,var(--maibot-fallback-border));border-radius:var(--maibot-radius,6px);background:var(--maibot-soft,var(--maibot-fallback-soft));cursor:pointer}.step-status-title{font-weight:600}.step-status-text{font-size:12px;line-height:1.6;overflow-wrap:anywhere}.step-status[data-tone="success"]{border-color:var(--status-ok);background:var(--status-ok-soft)}.step-status[data-tone="success"] .step-status-title{color:var(--status-ok)}.step-status[data-tone="error"]{border-color:var(--status-bad);background:var(--status-bad-soft);color:inherit}.step-status[data-tone="error"] .step-status-title{color:var(--status-bad)}.maibot-input[readonly]{background:transparent;cursor:default}
+.check-result[data-tone]{color:inherit}.check-result[data-tone="success"] #check-config-message{color:var(--status-ok);font-weight:600}.check-result[data-tone="error"] #check-config-message{color:var(--status-bad);font-weight:600}
+.guide{margin-top:16px;border:1px solid var(--maibot-border,var(--maibot-fallback-border));border-radius:var(--maibot-radius,6px);background:var(--maibot-soft,var(--maibot-fallback-soft))}.guide>summary{cursor:pointer;padding:10px 12px;font-weight:600;color:var(--maibot-primary,var(--maibot-fallback-primary))}.guide-body{padding:0 14px 14px;display:grid;gap:10px;font-size:13px;line-height:1.7;min-width:0}.guide-body h3{margin:6px 0 0}.guide-body ol,.guide-body ul{margin:0;padding-left:20px;display:grid;gap:6px}.guide code{font-family:var(--maibot-font-mono,ui-monospace,monospace);font-size:12px;padding:1px 4px;border-radius:4px;border:1px solid var(--maibot-border,var(--maibot-fallback-border));background:var(--maibot-surface,var(--maibot-fallback-surface));overflow-wrap:anywhere}.guide code.url{user-select:all;cursor:text;color:var(--maibot-primary,var(--maibot-fallback-primary))}.guide pre{margin:0;padding:10px 12px;overflow-x:auto;white-space:pre;user-select:all;font-family:var(--maibot-font-mono,ui-monospace,monospace);font-size:12px;border-radius:6px;border:1px solid var(--maibot-border,var(--maibot-fallback-border));background:var(--maibot-surface,var(--maibot-fallback-surface))}.table-wrap{overflow-x:auto;min-width:0}.guide-table{width:100%;border-collapse:collapse;font-size:12px}.guide-table th,.guide-table td{border:1px solid var(--maibot-border,var(--maibot-fallback-border));padding:6px 8px;text-align:left;vertical-align:top}.guide-table th{background:var(--maibot-surface,var(--maibot-fallback-surface))}
+.operation-error{margin:0;border-color:var(--status-bad);background:var(--status-bad-soft)}.operation-error-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}.operation-error-head strong{color:var(--status-bad)}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body class="maibot-page">
+<a href="#main" class="skip maibot-button">跳到设置内容</a>
+<div class="shell">
+<header class="page-head">
+  <h1>GPT-SoVITS 语音设置</h1>
+  <button type="button" id="refresh-state" class="maibot-button" disabled><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M6 7a7 7 0 0 1 12-1l2 3M4 15l2 3a7 7 0 0 0 12-1"/></svg><span>刷新状态</span></button>
+</header>
+<nav class="steps" aria-label="设置步骤">
+  <button type="button" id="step-api" class="step maibot-button" aria-current="step" aria-controls="panel-api" disabled><span>1 · API 配置测试</span></button>
+  <button type="button" id="step-base" class="step maibot-button" aria-controls="base-card" disabled><span>2 · 选择底模</span></button>
+  <button type="button" id="step-models" class="step maibot-button" aria-controls="mode-card" disabled><span>3 · 声音模式</span></button>
+  <button type="button" id="step-parameters" class="step maibot-button" aria-controls="parameters-card preview-card" disabled><span>4 · 参数与试听</span></button>
+  <button type="button" id="step-auto" class="step maibot-button" aria-controls="auto-card" disabled><span>5 · 自动语音回复</span></button>
+</nav>
+<div id="global-status" class="status-box" role="status" aria-live="polite" aria-atomic="true"><p id="global-message" class="loading-line"><span class="spinner" aria-hidden="true"></span>正在读取已保存的设置…</p></div>
+<div class="actions" style="margin-bottom:16px"><button type="button" id="retry-connection" class="maibot-button" hidden disabled>重试自动确认连接</button></div>
+<noscript><p class="status-box">请启用脚本，并在 MaiBot 内打开此设置页。</p></noscript>
+<div class="layout">
+<main id="main" class="main-column" tabindex="-1" aria-busy="true">
+<section id="panel-api" class="maibot-card" aria-labelledby="api-title">
+  <div class="section-head"><div><span class="section-number">第一步 · API 配置测试</span><h2 id="api-title" tabindex="-1">服务连接</h2><p class="hint">由插件访问接口，浏览器不会直接请求服务地址。</p></div><span id="connection-badge" class="pill"><span class="dot" aria-hidden="true"></span><span id="connection-label">正在读取</span></span></div>
+  <div class="fields">
+    <div class="field full"><label for="base-url">接口地址</label><input id="base-url" class="maibot-input path" type="url" maxlength="2048" autocomplete="url" spellcheck="false" placeholder="http://127.0.0.1:9880" aria-describedby="base-url-help" disabled><p id="base-url-help" class="hint">填写 GPT-SoVITS 服务地址。远程服务请使用插件所在机器可访问的地址。</p></div>
+    <div class="field"><label for="api-timeout">请求超时（秒）</label><input id="api-timeout" class="maibot-input" type="number" min="1" max="240" step="1" inputmode="decimal" aria-describedby="timeout-help" disabled><p id="timeout-help" class="hint">范围为 1～240 秒；后台任务采用短请求查询进度。</p></div>
+    <div class="field"><span class="hint">连接状态</span><p id="connection-message">正在读取服务状态…</p><p id="api-dirty" class="hint">尚未读取配置</p></div>
+  </div>
+  <div class="actions"><button type="button" id="test-api" class="maibot-button maibot-button-primary" disabled>保存并测试连接</button><span class="grow"></span><button type="button" id="next-step" class="maibot-button" disabled>下一步：选择底模 →</button></div>
+  <p class="hint" style="margin-top:12px">测试前会先保存当前地址。连接成功只表示接口可达，不代表权重已加载或参考音频可用。连接成功后才能进入第二步。</p>
+  <details id="deploy-guide" class="guide">
+    <summary>还没有部署 GPT-SoVITS？查看部署教程</summary>
+    <div class="guide-body">
+      <p class="hint">本插件通过 GPT-SoVITS 自带的 <code>api_v2.py</code> 接口合成语音，需要先在本机或局域网内的电脑上部署并启动它。本页无法直接打开外部链接：点击链接文字即可全选，按 Ctrl+C 复制后粘贴到浏览器打开。</p>
+      <h3>1. 获取 GPT-SoVITS</h3>
+      <ul>
+        <li><strong>Windows 整合包（推荐）</strong>：自带运行环境和全部底模，解压即用。下载最新的 <code>GPT-SoVITS-v5-20261005.7z</code>；RTX 50 系列显卡下载 <code>GPT-SoVITS-v5-20261005nvidia50x0.7z</code>。解压到不含中文和空格的目录，例如 <code>D:\GPT-SoVITS</code>。
+          <br>Hugging Face 下载：<code class="url">https://huggingface.co/lj1995/GPT-SoVITS-windows-package/resolve/main/GPT-SoVITS-v5-20261005.7z</code>
+          <br>RTX 50 系列：<code class="url">https://huggingface.co/lj1995/GPT-SoVITS-windows-package/resolve/main/GPT-SoVITS-v5-20261005nvidia50x0.7z</code>
+          <br>全部版本：<code class="url">https://huggingface.co/lj1995/GPT-SoVITS-windows-package/tree/main</code></li>
+        <li><strong>源码安装</strong>（Windows / Linux / macOS，需要先安装 Conda）：
+<pre>git clone https://github.com/RVC-Boss/GPT-SoVITS
+cd GPT-SoVITS
+conda create -n GPTSoVits python=3.10
+conda activate GPTSoVits
+pwsh -F install.ps1 --Device CU128 --Source HF</pre>
+          Linux / macOS 把最后一行换成 <code>bash install.sh --device CU128 --source HF</code>。没有 NVIDIA 显卡时 Device 填 <code>CPU</code>（macOS 可填 <code>MPS</code>）；较旧的显卡也可填 <code>CU126</code>。安装脚本会从 Hugging Face 自动下载 v1～v4、v2Pro 底模；v5 底模需按第二步说明另行下载。</li>
+      </ul>
+      <h3>2. 启动 API 服务</h3>
+      <p>插件需要的是 API 服务，不是 <code>go-webui.bat</code> 打开的网页界面。在 GPT-SoVITS 根目录打开终端运行：</p>
+<pre>python api_v2.py -a 127.0.0.1 -p 9880 -c GPT_SoVITS/configs/tts_infer.yaml</pre>
+      <p>整合包用户可在根目录新建 <code>go-api.bat</code>，写入以下内容后双击运行：</p>
+<pre>@echo off
+cd /d "%~dp0"
+set "PATH=%~dp0runtime;%PATH%"
+runtime\python.exe api_v2.py -a 127.0.0.1 -p 9880 -c GPT_SoVITS/configs/tts_infer.yaml
+pause</pre>
+      <p>浏览器打开 <code class="url">http://127.0.0.1:9880/docs</code>，能看到接口文档就说明启动成功。使用期间保持这个窗口运行。</p>
+      <h3>3. 回到本页测试连接</h3>
+      <p>在上方“接口地址”填写 <code>http://127.0.0.1:9880</code>，点击“保存并测试连接”，成功后进入第二步选择底模。</p>
+      <h3>常见问题</h3>
+      <ul class="hint">
+        <li>9880 是 API 端口；9872、9874 是网页界面（Gradio），填在这里会连接失败或返回网页。</li>
+        <li>只有 CPU：把 <code>GPT_SoVITS/configs/tts_infer.yaml</code> 中 <code>custom</code> 段改为 <code>device: cpu</code>、<code>is_half: false</code> 再启动；CPU 合成较慢，建议选 v2 或 v2Pro 底模，并在第一步把请求超时调大。</li>
+        <li>GPT-SoVITS 装在另一台电脑：启动参数改为 <code>-a 0.0.0.0</code>，这里填写那台电脑的局域网 IP，并在防火墙放行 9880 端口，不要暴露到公网。第二步的模型目录和第三、四步的参考音频必须是那台电脑上的路径。</li>
+        <li>GPT-SoVITS 运行在 Docker 中时，容器里的 127.0.0.1 指容器本身，请填写 MaiBot 所在机器能访问的地址。</li>
+        <li>连接测试只检查接口是否可达，不加载模型；首次合成需要加载模型，会比较慢。</li>
+      </ul>
+      <p class="hint">完整教程见 GitHub：<code class="url">https://github.com/RVC-Boss/GPT-SoVITS</code></p>
+    </div>
+  </details>
+</section>
+<section id="base-card" class="maibot-card" aria-labelledby="base-title" hidden>
+  <div class="section-head"><div><span class="section-number">第二步 · 选择底模</span><h2 id="base-title" tabindex="-1">底模</h2><p class="hint">选择 SoVITS 底模或完整权重，底模版本自动识别；下一步再配置角色或普通模式的声音。</p></div></div>
+  <div class="fields">
+    <div class="field full"><label for="model-root">本机模型目录</label><div class="inline-field"><input id="model-root" class="maibot-input path" maxlength="1024" spellcheck="false" autocomplete="off" placeholder="C:/GPT-SoVITS" aria-describedby="model-root-help catalog-note" disabled><button type="button" id="scan-models" class="maibot-button" disabled>扫描本机目录</button></div><p id="model-root-help" class="hint">填写插件所在机器上的 GPT-SoVITS 安装目录；扫描 GPT_SoVITS/pretrained_models、GPT_weights* 和 SoVITS_weights*，不会上传或改写文件。</p><p id="catalog-note" class="hint" aria-live="polite">尚未扫描目录。</p></div>
+    <div class="field full"><label for="sovits-model-picker">SoVITS 底模 / 完整权重</label><select id="sovits-model-picker" class="maibot-select path" aria-describedby="sovits-path sovits-model-picker-help" disabled><option value="">请先扫描本机模型目录</option></select><p id="sovits-path" class="hint path" aria-live="polite">尚未选择 SoVITS 权重。</p><p id="sovits-model-picker-help" class="hint">选项依次显示文件名、识别版本、来源和完整路径。LoRA 请在第三步普通模式中单独选择；选择后不会自动加载。</p></div>
+    <div class="field full"><label for="base-model">底模版本（自动识别）</label><input id="base-model" class="maibot-input" readonly aria-describedby="base-model-help" disabled><p id="base-model-help" class="hint">选择 SoVITS 权重后自动识别底模版本，无需手动选择。</p></div>
+  </div>
+  <p id="base-dirty" class="hint" style="margin-top:12px">尚未读取底模设置。</p>
+  <div class="actions"><button type="button" id="base-back-step" class="maibot-button" disabled>← 返回 API 设置</button><span class="grow"></span><button type="button" id="save-base" class="maibot-button maibot-button-primary" disabled>保存底模并继续 →</button></div>
+  <details id="base-guide" class="guide">
+    <summary>该选哪个底模？底模下载地址</summary>
+    <div class="guide-body">
+      <h3>怎么选</h3>
+      <ul>
+        <li><strong>有 NVIDIA 显卡、想要最像参考音频</strong>：<code>v5turbo</code>。v5 不训练也能获得更高的音色相似度，输出 48 kHz。</li>
+        <li><strong>只有 CPU 或想要更快</strong>：<code>v2</code> 或 <code>v2Pro</code>。推理快、占用低，输出 32 kHz。</li>
+        <li><strong>自己训练、训练素材音质一般</strong>：<code>v2Pro</code> / <code>v2ProPlus</code>，对音质一般的训练集比 v3/v4 更稳。</li>
+        <li><strong>已经有某个版本训练好的模型</strong>：选与它相同版本的底模。</li>
+      </ul>
+      <div class="table-wrap"><table class="guide-table">
+        <thead><tr><th>版本</th><th>特点</th><th>需要的文件（都在 <code>GPT_SoVITS/pretrained_models/</code> 下，保留子目录）</th></tr></thead>
+        <tbody>
+          <tr><td>v5turbo</td><td>最新（2026-10）。默认 4 步采样，速度较快；48 kHz；参考文本必填</td><td><code>s1v3.ckpt</code>、<code>gsv-v5-pretrained/s2Gv5turbo.pth</code>、<code>gsv-v5-pretrained/vocoder.pth</code></td></tr>
+          <tr><td>v5dev</td><td>与 v5turbo 同代，默认 32 步采样并启用 CFG，明显更慢；参考文本必填</td><td><code>s1v3.ckpt</code>、<code>gsv-v5-pretrained/s2Gv5dev.pth</code>、<code>gsv-v5-pretrained/vocoder.pth</code></td></tr>
+          <tr><td>v2ProPlus</td><td>v2Pro 的加大版本（SoVITS 约 191 MB，v2Pro 约 155 MB），效果更好、略慢</td><td><code>s1v3.ckpt</code>、<code>v2Pro/s2Gv2ProPlus.pth</code>、<code>sv/pretrained_eres2netv2w24s4ep4.ckpt</code></td></tr>
+          <tr><td>v2Pro</td><td>显存占用略高于 v2，效果超过 v4，保留 v2 的推理速度；32 kHz</td><td><code>s1v3.ckpt</code>、<code>v2Pro/s2Gv2Pro.pth</code>、<code>sv/pretrained_eres2netv2w24s4ep4.ckpt</code></td></tr>
+          <tr><td>v4</td><td>修复 v3 的金属音，48 kHz；参考文本必填</td><td><code>s1v3.ckpt</code>、<code>gsv-v4-pretrained/s2Gv4.pth</code>、<code>gsv-v4-pretrained/vocoder.pth</code></td></tr>
+          <tr><td>v3</td><td>24 kHz，已被 v4 / v5 取代；参考文本必填</td><td><code>s1v3.ckpt</code>、<code>s2Gv3.pth</code>、<code>models--nvidia--bigvgan_v2_24khz_100band_256x/</code>（整个文件夹）</td></tr>
+          <tr><td>v2</td><td>支持中、日、英、韩、粤语，速度快，CPU 友好；32 kHz</td><td><code>gsv-v2final-pretrained/s1bert25hz-5kh-longer-epoch=12-step=369668.ckpt</code>、<code>gsv-v2final-pretrained/s2G2333k.pth</code></td></tr>
+          <tr><td>v1</td><td>最早版本，不支持韩语、粤语，不推荐</td><td><code>s1bert25hz-2kh-longer-epoch=68e-step=50232.ckpt</code>、<code>s2G488k.pth</code></td></tr>
+        </tbody>
+      </table></div>
+      <p class="hint">所有版本还都需要 <code>chinese-hubert-base/</code> 和 <code>chinese-roberta-wwm-ext-large/</code>；合成中文还需要 G2PW 模型（解压为 <code>G2PWModel</code> 放到 <code>GPT_SoVITS/text/</code>）。v3 / v4 / v5 训练得到的 SoVITS 是 LoRA，要和同版本的标准底模一起使用（第三步选择）；v1 / v2 / v2Pro 训练得到的是完整权重，可以直接在本步选择。</p>
+      <h3>下载地址</h3>
+      <p class="hint">使用 Windows 整合包时底模已经齐全，无需再下载。本页无法直接打开外部链接：点击链接文字即可全选，复制到浏览器打开。</p>
+      <ul>
+        <li>全部底模（Hugging Face，按上表逐个下载）：<code class="url">https://huggingface.co/lj1995/GPT-SoVITS/tree/main</code></li>
+        <li>v5 底模（Hugging Face）：<code class="url">https://huggingface.co/lj1995/GPT-SoVITS/tree/main/gsv-v5-pretrained</code>
+          <br>需要 <code>s2Gv5turbo.pth</code>（约 731 MB）或 <code>s2Gv5dev.pth</code>（约 731 MB）、<code>vocoder.pth</code>（约 55 MB），以及根目录的 <code>s1v3.ckpt</code>（约 148 MB）。
+          <br>逐个文件直接下载：<code class="url">https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/gsv-v5-pretrained/s2Gv5turbo.pth</code>、<code class="url">https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/gsv-v5-pretrained/vocoder.pth</code>、<code class="url">https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/s1v3.ckpt</code></li>
+        <li>v1～v4、v2Pro 打包下载（约 4.3 GB，不含 v5，解压后放到 <code>GPT_SoVITS/pretrained_models</code>）：<code class="url">https://huggingface.co/XXXXRT/GPT-SoVITS-Pretrained/resolve/main/pretrained_models.zip</code></li>
+        <li>G2PW 中文模型：<code class="url">https://huggingface.co/XXXXRT/GPT-SoVITS-Pretrained/resolve/main/G2PWModel.zip</code></li>
+        <li>各版本特性说明（GitHub Wiki）：<code class="url">https://github.com/RVC-Boss/GPT-SoVITS/wiki</code></li>
+      </ul>
+      <p class="hint">下载放好后点击上方“扫描本机目录”，在下拉框中选择对应的 SoVITS 文件（例如 <code>gsv-v5-pretrained/s2Gv5turbo.pth</code>），版本会自动识别。插件通过接口切换模型，不需要重启 API 服务。</p>
+    </div>
+  </details>
+</section>
+<section id="mode-card" class="maibot-card" aria-labelledby="mode-title" hidden>
+  <span class="section-number">第三步 · 选择角色或普通模式</span><h2 id="mode-title" tabindex="-1">声音配置模式</h2><p class="hint">角色模式读取 role.json 中每种情感的 GPT 权重、SoVITS 权重和参考音频；普通模式手动选择 GPT、可选的 LoRA 和参考音频。</p>
+<div id="mode-selector" class="mode-tabs" role="tablist" aria-label="配置模式">
+  <button type="button" id="role-mode-btn" class="maibot-button" role="tab" aria-selected="false" tabindex="-1" aria-controls="role-card" disabled>角色模式 · JSON 自动配置</button>
+  <button type="button" id="original-mode-btn" class="maibot-button" role="tab" aria-selected="true" tabindex="0" aria-controls="panel-models" disabled>普通模式 · 手工配置</button>
+</div>
+<section id="panel-models" class="mode-panel" role="tabpanel" aria-labelledby="original-mode-btn" hidden>
+  <div class="section-head"><div><h3 id="models-title" tabindex="-1">GPT、可选 LoRA 与参考音频</h3><p class="hint">底模在第二步选择；这里选择 GPT、可选 LoRA 和参考音频，生成参数在第四步配置。</p></div><span id="models-badge" class="pill"><span class="dot" aria-hidden="true"></span><span id="models-label">尚未加载</span></span></div>
+  <div id="connection-required" class="status-box" role="note"><p>接口尚未测试成功。可以查看和保存设置；加载、试听前请返回第一步测试连接。</p></div>
+  <div class="status-box warning" role="note"><p><strong>加载会改变共享服务的全局权重</strong>插件会依次设置 GPT 与 SoVITS 权重；同一个 GPT-SoVITS 服务上的其他使用者也会受到影响。保存设置不会加载模型；第四步可按需加载并试听。</p></div>
+  <div class="fields">
+    <div class="field full"><label for="gpt-model-picker">GPT 模型</label><select id="gpt-model-picker" class="maibot-select path" aria-describedby="gpt-path gpt-model-picker-help" disabled><option value="">请先扫描本机模型目录</option></select><p id="gpt-path" class="hint path" aria-live="polite">尚未选择 GPT 权重。</p><p id="gpt-model-picker-help" class="hint">选项依次显示文件名、来源和完整路径；GPT 需与第二步识别的底模版本配套。选择后不会自动加载。</p></div>
+    <div class="field full"><label for="lora-model-picker">LoRA 模型（可选）</label><select id="lora-model-picker" class="maibot-select path" aria-describedby="lora-path lora-model-picker-help lora-catalog-note" disabled><option value="">无LoRA(只使用底模)</option></select><p id="lora-path" class="hint path" aria-live="polite">不使用 LoRA，只加载底模。</p><p id="lora-model-picker-help" class="hint">LoRA 是独立的 SoVITS .pth 增量权重，不是 GPT .ckpt。官方服务按 LoRA 版本从默认位置自动查找底模，没有自定义底模 API，不能任意把不匹配的底模与 LoRA 配对；路径必须能由服务端读取。</p><p id="lora-catalog-note" class="hint" aria-live="polite">本机模型目录中未发现 LoRA。</p></div>
+    <div class="field full"><label for="ref-audio-path">参考音频</label><div class="inline-field"><select id="ref-audio-path" class="maibot-select path" aria-describedby="ref-audio-full ref-audio-help refs-note" disabled><option value="">请先扫描本机模型目录</option></select><button type="button" id="refresh-refs" class="maibot-button" disabled>刷新参考音频</button></div><p id="ref-audio-full" class="hint path" aria-live="polite">尚未选择参考音频。</p><p id="ref-audio-help" class="hint">把参考音频放到 GPT-SoVITS 安装目录下的 maibot_refs 文件夹（3～10 秒、单人、没有背景音），点击“刷新参考音频”后在这里选择。合成时由 GPT-SoVITS 直接读取该文件。</p><p id="refs-note" class="hint" aria-live="polite">尚未扫描参考音频。</p></div>
+    <div class="field full"><label for="prompt-text">参考音频对应的文字</label><textarea id="prompt-text" class="maibot-input" maxlength="4000" rows="3" aria-describedby="prompt-help" disabled></textarea><p id="prompt-help" class="hint">与参考音频说的话一字不差。v3、v4、v5 底模必须填写；v1、v2、v2Pro 可以留空（效果通常差一些）。</p></div>
+    <div class="field"><label for="prompt-lang">参考音频语言</label><input id="prompt-lang" class="maibot-input" list="language-options" maxlength="32" autocomplete="off" spellcheck="false" aria-describedby="language-help" disabled></div>
+    <div class="field"><label for="text-lang">合成文字语言</label><input id="text-lang" class="maibot-input" list="language-options" maxlength="32" autocomplete="off" spellcheck="false" aria-describedby="language-help" disabled></div>
+    <datalist id="language-options"><option value="zh" label="中文"></option><option value="en" label="英文"></option><option value="ja" label="日文"></option><option value="ko" label="韩文"></option><option value="yue" label="粤语"></option><option value="auto" label="自动识别"></option><option value="all_zh" label="全中文"></option><option value="all_ja" label="全日文"></option></datalist>
+    <p id="language-help" class="hint full">选择或填写接口支持的语言代码，语言代码按接口要求以小写保存。</p>
+  </div>
+
+  <div class="actions"><button type="button" id="back-step" class="maibot-button" disabled>← 返回底模设置</button><span class="grow"></span><button type="button" id="save-models" class="maibot-button" disabled>仅保存设置</button></div>
+  <p id="models-dirty" class="hint" style="margin-top:12px">尚未读取配置</p><p id="model-message" class="hint" style="margin-top:6px">请先手动加载模型。</p>
+</section>
+<section id="role-card" class="mode-panel" role="tabpanel" aria-labelledby="role-mode-btn" hidden>
+  <div class="section-head"><div><h3 id="role-title" tabindex="-1">角色配置（role.json）</h3><p class="hint">读取 role.json 后由后台校验每个文件的大小与 SHA256，以及所需底模是否已安装在 GPT-SoVITS 中；不会自动加载模型。</p></div></div>
+  <div class="field full"><label for="role-data-dir">角色目录（GPT-SoVITS 目录下的 maibot_roles）</label><div class="inline-field"><input id="role-data-dir" class="maibot-input path" maxlength="1024" autocomplete="off" spellcheck="false" readonly placeholder="正在读取角色目录" aria-describedby="role-data-dir-help roles-note" disabled><button type="button" id="refresh-role-dir" class="maibot-button" disabled>刷新</button></div><p id="role-data-dir-help" class="hint">只扫描 GPT-SoVITS 安装目录（第二步的本机模型目录）下的 maibot_roles/&lt;角色&gt;/role.json。请自行把角色文件夹（role.json、模型与参考音频）放到这里，本页不提供上传；不扫描插件 data 或其他目录。下方显示实际路径和解析错误。</p></div>
+  <div class="fields" style="margin-top:16px">
+    <div class="field"><label for="role-picker">选择角色</label><select id="role-picker" class="maibot-select" aria-describedby="role-picker-help" disabled><option value="">尚未读取角色</option></select><p id="role-picker-help" class="hint">角色来自 maibot_roles 中各文件夹的 role.json；放入角色文件夹后点击“刷新角色列表”。</p></div>
+    <div class="field"><label for="emotion-picker">默认试听情感</label><select id="emotion-picker" class="maibot-select" aria-describedby="emotion-picker-help" disabled><option value="">请先选择角色</option></select><p id="emotion-picker-help" class="hint">只可选择已勾选情感。默认或勾选集合修改后必须重新读取；工具合成可另指定已启用情感。</p></div>
+    <fieldset class="field full" style="margin:0"><legend>启用情感（可同时选择 1～50 个）</legend><div id="emotion-options" class="actions" aria-describedby="emotion-options-help" style="margin-top:4px"></div><p id="emotion-options-help" class="hint">每个情感使用 role.json 中对应的 GPT 权重、SoVITS 权重和参考音频。至少勾选一个，再读取角色配置。</p></fieldset>
+  </div>
+  <p id="roles-note" class="hint" role="status" aria-live="polite">尚未读取角色列表。</p>
+  <div class="actions"><button type="button" id="refresh-roles" class="maibot-button" disabled>刷新角色列表</button><button type="button" id="apply-role" class="maibot-button maibot-button-primary" disabled>读取角色配置</button></div>
+  <div id="role-status" class="status-box" role="status" aria-live="polite" style="margin-top:16px;white-space:pre-wrap">请选择角色与情绪，再读取角色配置。</div>
+  <div id="role-reference" class="status-box" style="margin-top:16px" hidden><h3>角色参考声音（只读）</h3><p id="role-reference-path" class="hint path"></p>  <div class="field"><label for="role-ref-text">参考文本只读预览</label><textarea id="role-ref-text" class="maibot-input" rows="3" readonly aria-describedby="role-ref-help"></textarea><p id="role-ref-help" class="hint">内容来自已校验的 role.json。普通模式的手工设置会在切回普通模式时由后台恢复。</p></div></div>
+  <fieldset id="emotion-judge" class="status-box" style="margin:16px 0 0">
+    <legend><strong>多情感时的情感判断</strong></legend>
+    <label class="parameter-check" for="llm-emotion"><input id="llm-emotion" type="checkbox" aria-describedby="llm-emotion-help" disabled>用 MaiBot 的 LLM 判断每句话的情感</label>
+    <p id="llm-emotion-help" class="hint">启用 2 个以上情感时，每次合成前把要朗读的句子发给 MaiBot 的 LLM，从已启用的情感中选出一个，再使用该情感的 GPT 权重、SoVITS 权重和参考音频合成。适用于 /tts 命令、未指定情感的语音工具和自动语音；LLM 失败或超时（15 秒）时使用默认情感，不影响发送。</p>
+    <div class="field" style="margin-top:12px"><label for="llm-task">情感判断模型任务</label><div class="inline-field"><select id="llm-task" class="maibot-select" aria-describedby="llm-task-help" disabled><option value="fast_model">fast_model（快速模型）</option></select><button type="button" id="refresh-llm-tasks" class="maibot-button" disabled>刷新模型任务</button></div><p id="llm-task-help" class="hint">使用 MaiBot「模型配置」里的模型任务，推荐 fast_model（未配置模型时 MaiBot 会自动改用 utils）。每句话会多一次模型调用，同一句话 10 分钟内复用判断结果。</p></div>
+    <p id="emotion-judge-note" class="hint" role="status" aria-live="polite" style="margin-top:8px">尚未读取情感判断设置。</p>
+    <div class="actions"><button type="button" id="save-emotion-judge" class="maibot-button maibot-button-primary" disabled>保存情感判断设置</button></div>
+    <div class="field" style="margin-top:12px"><label for="emotion-test-text">试判断一句话（只调用 LLM，不合成语音）</label><div class="inline-field"><input id="emotion-test-text" class="maibot-input" maxlength="300" autocomplete="off" value="今天终于放晴了，好开心！" aria-describedby="emotion-test-result" disabled><button type="button" id="test-emotion" class="maibot-button" disabled>试判断</button></div><p id="emotion-test-result" class="hint" role="status" aria-live="polite">读取角色配置并启用 2 个以上情感后可试判断。</p></div>
+  </fieldset>
+
+  <p class="hint" style="margin-top:12px">加载会改变共享服务的全局权重。角色配置成功后进入第四步调整参数，可在同一步按需加载并试听；API 连接、任务和试听播放器由两种模式共享。</p>
+  <div class="actions"><button type="button" id="role-back-step" class="maibot-button" disabled>← 返回底模设置</button><span class="grow"></span></div>
+</section>
+  <details id="voice-guide" class="guide">
+    <summary>参考音频和角色文件放在哪里？</summary>
+    <div class="guide-body">
+      <p class="hint">合成时由 GPT-SoVITS 服务直接读取参考音频和模型文件，所以请把它们放在 GPT-SoVITS 安装目录（第二步填写的本机模型目录）下的指定文件夹里。本页不提供上传，文件夹不存在时请自己新建。插件和 GPT-SoVITS 需要在同一台电脑上，或能用同一路径访问这些文件。</p>
+      <h3>普通模式：参考音频</h3>
+      <ol>
+        <li>把参考音频复制到：<code id="refs-dir-hint" class="url">&lt;GPT-SoVITS 安装目录&gt;/maibot_refs</code>（可以再建子文件夹分类）。</li>
+        <li>要求：3～10 秒、单人说话、清晰、没有背景音乐和杂音；支持 wav、mp3、flac、ogg、m4a。</li>
+        <li>点击“刷新参考音频”，在下拉框中选择；填写参考音频对应的文字（v3、v4、v5 底模必填，要与音频内容一字不差）、参考音频语言和合成文字语言，再点击“仅保存设置”。</li>
+      </ol>
+      <h3>角色模式：角色文件夹</h3>
+      <ol>
+        <li>把整个角色文件夹复制到：<code id="roles-dir-hint" class="url">&lt;GPT-SoVITS 安装目录&gt;/maibot_roles</code>，每个角色文件夹里放一个 <code>role.json</code>，结构为 <code>maibot_roles/角色名/role.json</code>。</li>
+        <li>role.json 里每个情感写明 gpt、sovits、ref_audio（文件名相对角色文件夹）和 ref_text；这些文件放在同一个角色文件夹里。如果写了 base_model（例如 v2Pro / v2ProPlus 需要的 pretrained_eres2netv2w24s4ep4.ckpt），该文件必须已安装在 GPT-SoVITS 的 GPT_SoVITS/pretrained_models 中（这里是 sv 文件夹），角色文件夹里的副本不会被使用。</li>
+        <li>点击“刷新角色列表”，选择角色和要启用的情感，再点击“读取角色配置”。</li>
+      </ol>
+      <p class="hint">不要放到插件的 data 目录：插件不会在那里查找，而且在 MaiBot 中卸载插件时插件目录（包括 data）会被删除。</p>
+    </div>
+  </details>
+  <div class="actions"><span class="grow"></span><button type="button" id="next-parameters" class="maibot-button maibot-button-primary" disabled>下一步：参数与试听 →</button></div>
+</section>
+<section id="parameters-card" class="maibot-card" aria-labelledby="parameters-title" hidden>
+  <span class="section-number">第四步 · 参数与试听</span><h2 id="parameters-title" tabindex="-1">声音与生成参数</h2><p class="hint">角色模式与普通模式共享下方生成参数；参考音频在第三步设置。保存不会改写角色权重、情感或参考音频。保存后可直接进入第五步，下方试听是可选的。</p>
+  <form id="parameters-form" style="margin-top:20px" novalidate><fieldset class="parameter-group"><legend>生成与消息行为</legend><div class="fields">
+    <div class="field"><label for="speed-factor">语速</label><input id="speed-factor" class="maibot-input" type="number" min="0.5" max="2" step="0.05" inputmode="decimal" aria-describedby="speed-factor-help" disabled><p id="speed-factor-help" class="hint">0.5～2，1 为正常语速。</p></div>
+    <div class="field"><label for="top-k">采样候选数</label><input id="top-k" class="maibot-input" type="number" min="1" max="100" step="1" inputmode="decimal" aria-describedby="top-k-help" disabled><p id="top-k-help" class="hint">整数 1～100。</p></div>
+    <div class="field"><label for="top-p">核采样概率</label><input id="top-p" class="maibot-input" type="number" min="0.01" max="1" step="0.01" inputmode="decimal" aria-describedby="top-p-help" disabled><p id="top-p-help" class="hint">大于 0 且不超过 1。</p></div>
+    <div class="field"><label for="temperature">采样温度</label><input id="temperature" class="maibot-input" type="number" min="0.01" max="2" step="0.01" inputmode="decimal" aria-describedby="temperature-help" disabled><p id="temperature-help" class="hint">大于 0 且不超过 2。</p></div>
+    <div class="field"><label for="seed">随机种子</label><input id="seed" class="maibot-input" type="number" min="-1" max="2147483647" step="1" inputmode="decimal" aria-describedby="seed-help" disabled><p id="seed-help" class="hint">整数 -1～2147483647，-1 为随机。</p></div>
+    <div class="field"><label for="max-text-length">消息最大字数</label><input id="max-text-length" class="maibot-input" type="number" min="1" max="2000" step="1" inputmode="decimal" aria-describedby="max-text-length-help" disabled><p id="max-text-length-help" class="hint">整数 1～2000，控制插件消息长度。</p></div>
+    <div class="field"><label for="cooldown-seconds">语音冷却（秒）</label><input id="cooldown-seconds" class="maibot-input" type="number" min="0" max="3600" step="0.1" inputmode="decimal" aria-describedby="cooldown-seconds-help" disabled><p id="cooldown-seconds-help" class="hint">0～3600 秒，0 为不等待。</p></div>
+    <div class="field"><label for="text-split-method">文本切分方式</label><select id="text-split-method" class="maibot-select" aria-describedby="text-split-method-help" disabled><option value="cut0">不切分</option><option value="cut1">每四句切分</option><option value="cut2">每 50 字切分</option><option value="cut3">按中文句号切分</option><option value="cut4">按英文句号切分</option><option value="cut5">按标点切分</option></select><p id="text-split-method-help" class="hint">使用接口支持的 cut0～cut5。</p></div>
+    <div class="field"><label class="parameter-check" for="parallel-infer"><input id="parallel-infer" type="checkbox" aria-describedby="parallel-infer-help" disabled>并行推理</label><p id="parallel-infer-help" class="hint">启用接口支持的并行推理。</p></div>
+    <div class="field"><label class="parameter-check" for="send-text"><input id="send-text" type="checkbox" aria-describedby="send-text-help" disabled>语音消息附带文字</label><p id="send-text-help" class="hint">仅保存消息行为；本页试听不会向 QQ 发送消息。</p></div>
+  </div></fieldset><p id="parameters-dirty" class="hint" role="status" style="margin-top:12px">尚未读取参数。</p><div class="actions"><button type="button" id="parameters-back" class="maibot-button" disabled>← 返回声音模式</button><button type="button" id="save-parameters" class="maibot-button maibot-button-primary" disabled>保存参数</button><span class="grow"></span><button type="button" id="next-auto" class="maibot-button" disabled>下一步：自动语音回复 →</button></div></form>
+</section>
+<div id="preview-card" class="preview-stack" hidden>
+<section id="test-card" class="maibot-card" aria-labelledby="test-title" hidden>
+  <div class="section-head"><div><span class="section-number">第四步 · 试听（可选）</span><h2 id="test-title" tabindex="-1">加载并试听</h2><p class="hint">不一定要试听：保存参数后可直接进入第五步。需要时可一次完成必要的模型加载与合成，仅本地预览，不向 QQ 发送消息；角色模式试听使用默认试听情感。</p></div></div>
+  <div class="field"><div class="label-row"><label for="test-text">测试文字</label><span id="text-count" class="hint">0 / 300 字</span></div><textarea id="test-text" class="maibot-input" maxlength="300" rows="3" aria-describedby="test-help text-count" disabled>你好，我是麦麦，很高兴和你聊天。</textarea><p id="test-help" class="hint">最多 300 字。生成成功后请手动点击播放器，音频不会自动播放。</p></div>
+  <div class="actions"><button type="button" id="preview-run" class="maibot-button maibot-button-primary" disabled>加载并生成试听</button><button type="button" id="synthesize" class="maibot-button" disabled>仅生成试听</button><span id="synthesize-requirement" class="hint">请先手动加载模型。</span></div>
+  <div class="actions"><button type="button" id="load-models" class="maibot-button" disabled>保存并加载模型</button><span id="role-preview-actions"><button type="button" id="role-load-models" class="maibot-button maibot-button-primary" disabled>加载所选角色</button><button type="button" id="role-synthesize" class="maibot-button" disabled>生成角色试听</button></span></div>
+  <div id="audio-block" class="audio-block" hidden><h3>试听音频</h3><p id="audio-meta" class="hint"></p><audio id="audio-player" controls preload="none" aria-label="试听音频播放器"></audio><a id="download-audio" class="maibot-button" download="麦麦语音试听.wav">下载试听音频</a></div>
+</section>
+<section id="job-card" class="maibot-card" aria-labelledby="job-title" hidden>
+  <div class="job-head"><h2 id="job-title">后台任务</h2><span id="job-badge" class="pill"><span id="job-label">等待任务</span></span></div><p id="job-message" class="job-message" role="status" aria-live="polite" aria-atomic="true"></p><p id="job-meta" class="job-meta"></p>
+  <div class="actions"><button type="button" id="cancel-job" class="maibot-button maibot-button-danger" disabled>取消后台任务</button><button type="button" id="retry-job" class="maibot-button" hidden disabled>继续查询任务</button><button type="button" id="retry-audio" class="maibot-button" hidden disabled>重新读取音频</button></div><p class="hint" style="margin-top:10px">约每秒查询一次。刷新页面不会取消后台任务，重新打开后可恢复进度。</p>
+</section>
+</div>
+<section id="auto-card" class="maibot-card" aria-labelledby="auto-title" hidden>
+  <span class="section-number">第五步 · 自动语音回复</span><h2 id="auto-title" tabindex="-1">自动语音回复</h2><p class="hint">默认关闭，不改变现有回复行为。只处理普通纯文字消息；voice / image（语音 / 图片）、混合消息与插件提示会跳过。语音成功后自动取消指定消息引用，避免平台拒发；转换失败保留原文字和引用。</p>
+  <form id="auto-form" style="margin-top:16px" novalidate><div class="fields">
+    <div class="field full"><label class="parameter-check" for="auto-enabled"><input id="auto-enabled" type="checkbox" aria-describedby="auto-enabled-help" disabled>启用自动语音回复</label><p id="auto-enabled-help" class="hint">启用后才按以下规则转换后续文字；本页保存不发 QQ、不合成，也不加载模型。</p></div>
+    <div class="field full"><label for="auto-frequency-mode">转换频率方式</label><select id="auto-frequency-mode" class="maibot-select" aria-describedby="auto-frequency-help" disabled><option value="probability">按概率</option><option value="every_n">每 N 条合格文字消息</option></select><p id="auto-frequency-help" class="hint">概率 0% 永不转换，100% 每条参与转换；每 N 条按 MaiBot 语义分句后的实际消息计数；插件不覆盖 MaiBot 分段，当前使用原生 LLM 语义断句。两种方式都会受最短间隔限制，间隔内会跳过而非排队。</p></div>
+    <div class="field"><label for="auto-probability">转换概率（%）</label><input id="auto-probability" class="maibot-input" type="number" min="0" max="100" step="1" value="50" aria-describedby="auto-probability-help" disabled><p id="auto-probability-help" class="hint">整数 0～100，默认 50；仅按概率时使用。</p></div>
+    <div class="field"><label for="auto-every-n">每 N 条转换一条</label><input id="auto-every-n" class="maibot-input" type="number" min="1" max="1000" step="1" value="3" aria-describedby="auto-every-n-help" disabled><p id="auto-every-n-help" class="hint">整数 1～1000，默认 3；按聊天流统计实际语义消息，语音、图片和插件提示不计入。</p></div>
+    <div class="field full"><label for="auto-min-interval">最短转换间隔（秒）</label><input id="auto-min-interval" class="maibot-input" type="number" min="0" max="3600" step="0.1" value="5" aria-describedby="auto-min-interval-help" disabled><p id="auto-min-interval-help" class="hint">0～3600 秒，默认 5；间隔未满会跳过，0 为不额外限制。</p></div>
+    <div class="field full"><label class="parameter-check" for="auto-follow-emotion"><input id="auto-follow-emotion" type="checkbox" checked aria-describedby="auto-follow-emotion-help" disabled>跟随回复情感（仅角色模式）</label><p id="auto-follow-emotion-help" class="hint">仅角色模式有效。</p><p class="hint">优先使用消息已有的情感标记；没有标记时，若第三步启用了 2 个以上情感并开启 LLM 判断，则调用 MaiBot 的 LLM 判断（每句一次额外调用），LLM 失败时再保守地按关键词推断；不明确时使用默认情感，只选择第三步已勾选情感。关闭后始终使用默认情感；普通模式只使用当前单一 LoRA（或底模），不选择情感，不混合 LoRA。</p></div>
+    <div class="field full"><label class="parameter-check" for="auto-keep-text"><input id="auto-keep-text" type="checkbox" aria-describedby="auto-keep-text-help" disabled>转换成功后保留文字</label><p id="auto-keep-text-help" class="hint">默认不保留成功转换的文字；转换失败始终保留文字，不影响第四步手动语音的附带文字设置。</p></div>
+  </div><p id="auto-dirty" class="hint" role="status" style="margin-top:12px">尚未读取自动语音设置。</p><div class="actions"><button type="button" id="auto-back" class="maibot-button" disabled>← 返回参数与试听</button><span class="grow"></span><button type="button" id="save-auto" class="maibot-button maibot-button-primary" disabled>保存自动语音设置</button></div></form>
+  <hr class="divider"><h3>自动语音运行摘要</h3><p id="auto-stats" class="hint" role="status" aria-live="polite" style="white-space:pre-line">尚未读取运行状态。</p>
+</section>
+<section id="operation-error" class="status-box operation-error" role="alert" aria-labelledby="operation-error-title" hidden><div class="operation-error-head"><strong id="operation-error-title">操作失败</strong><button type="button" id="dismiss-operation-error" class="maibot-button">关闭提示</button></div><p id="operation-error-message" class="job-message"></p></section>
+</main>
+<aside class="side-column" aria-label="当前配置检查与操作提示">
+<section id="check-config-card" class="maibot-card" aria-labelledby="check-config-title"><div class="section-head"><div><h2 id="check-config-title">当前配置检查</h2><p class="hint">每次按钮操作后自动检查已保存的配置：绿色表示没有问题，红色表示存在问题，点击条目可跳转到所在步骤。不计算文件哈希、不访问语音接口。</p></div></div><button type="button" id="check-config" class="maibot-button maibot-button-primary" disabled>立即检查</button><button type="button" id="resume-config" class="maibot-button" disabled>继续配置 / 前往待完成步骤</button><div id="check-config-result" class="check-result" role="status" aria-live="polite" style="margin-top:14px"><p id="check-config-message">尚未检查当前配置。</p><p id="check-config-summary" class="check-summary hint"></p><ul id="check-config-issues" class="check-issues"></ul></div></section>
+<section class="maibot-card summary-card" aria-labelledby="status-title"><h3 id="status-title">当前状态</h3><p class="hint">按第一至五步分类：绿色表示正常，红色表示存在问题；点击条目可跳转到对应步骤。</p><ul class="step-status-list"><li><button type="button" id="status-step-1" class="step-status" data-tone="info" disabled><span class="step-status-title">第一步 · API 配置</span><span id="status-step-1-text" class="step-status-text">正在读取…</span></button></li><li><button type="button" id="status-step-2" class="step-status" data-tone="info" disabled><span class="step-status-title">第二步 · 底模</span><span id="status-step-2-text" class="step-status-text">正在读取…</span></button></li><li><button type="button" id="status-step-3" class="step-status" data-tone="info" disabled><span class="step-status-title">第三步 · 声音模式</span><span id="status-step-3-text" class="step-status-text">正在读取…</span></button></li><li><button type="button" id="status-step-4" class="step-status" data-tone="info" disabled><span class="step-status-title">第四步 · 参数与试听</span><span id="status-step-4-text" class="step-status-text">正在读取…</span></button></li><li><button type="button" id="status-step-5" class="step-status" data-tone="info" disabled><span class="step-status-title">第五步 · 自动语音回复</span><span id="status-step-5-text" class="step-status-text">正在读取…</span></button></li></ul><p id="job-preview" class="hint" style="margin-top:12px">暂无后台任务。</p></section>
+<section class="maibot-card"><h3>操作提示</h3><p class="hint" style="margin-top:8px">1. 保存并测试 API。<br>2. 扫描本机模型目录，选择 SoVITS 底模（版本自动识别）。<br>3. 读取角色配置 role.json（角色文件夹放在 GPT-SoVITS 目录下的 maibot_roles），或为普通模式选择 GPT / LoRA 和参考音频（放在 maibot_refs）；多情感角色可开启 LLM 情感判断。<br>4. 保存生成参数；试听可选。<br>5. 按需启用自动语音回复并保存；默认关闭，失败保留文字。<br>每一步配置完成并保存后才能进入下一步；已完成的步骤可以随时返回修改。</p><p class="hint" style="margin-top:12px">配置检查只检查已保存设置，会在每次按钮操作后自动刷新，不代替 API 连接测试或角色资源校验。加载会改变共享服务的全局权重。</p></section>
+</aside>
+</div>
+<footer class="footer">使用 MaiBot 页面桥接；保存和选择不会自动加载模型。</footer>
+</div>
+<script>
+(() => {
+  'use strict';
+  const $ = (id) => document.getElementById(id);
+  const API_FIELDS = ['base-url', 'api-timeout'];
+  const BASE_FIELDS = ['model-root', 'sovits-model-picker'];
+  const TEXT_MODEL_FIELDS = ['model-root', 'prompt-text', 'prompt-lang', 'text-lang'];
+  // 参考音频改为下拉框：列出 GPT-SoVITS 目录下 maibot_refs 中的音频。
+  const REF_PICKER = 'ref-audio-path';
+  const WEIGHT_PICKERS = ['sovits-model-picker', 'gpt-model-picker', 'lora-model-picker'];
+  const MODEL_FIELDS = TEXT_MODEL_FIELDS.concat(WEIGHT_PICKERS, [REF_PICKER]);
+  const PARAM_FIELDS = {'speed-factor':'speed_factor','top-k':'top_k','top-p':'top_p','temperature':'temperature','seed':'seed','text-split-method':'text_split_method','parallel-infer':'parallel_infer','max-text-length':'max_text_length','cooldown-seconds':'cooldown_seconds','send-text':'send_text'};
+  const PARAM_DEFAULTS = {speed_factor:1,top_k:5,top_p:1,temperature:1,seed:-1,text_split_method:'cut5',parallel_infer:false,max_text_length:300,cooldown_seconds:5,send_text:false};
+  const AUTO_FIELDS = {'auto-enabled':'enabled','auto-frequency-mode':'frequency_mode','auto-probability':'probability_percent','auto-every-n':'every_n','auto-min-interval':'min_interval_seconds','auto-follow-emotion':'follow_emotion','auto-keep-text':'keep_text'};
+  const AUTO_DEFAULTS = {enabled:false,frequency_mode:'probability',probability_percent:50,every_n:3,min_interval_seconds:5,follow_emotion:true,keep_text:false};
+  const AUTO_SWITCHES = ['enabled','follow_emotion','keep_text'];
+  const PICKERS = {'sovits-weights':{id:'sovits-model-picker', path:'sovits-path', choose:'请选择 SoVITS 底模或完整权重', none:'尚未扫描到 SoVITS 权重，请先扫描本机模型目录', unset:'尚未选择 SoVITS 权重。'}, 'gpt-weights':{id:'gpt-model-picker', path:'gpt-path', choose:'请选择 GPT 模型', none:'尚未扫描到 GPT 权重，请先扫描本机模型目录', unset:'尚未选择 GPT 权重。'}, 'lora-weights':{id:'lora-model-picker', path:'lora-path', choose:'无LoRA(只使用底模)', none:'无LoRA(只使用底模)', unset:'不使用 LoRA，只加载底模。'}, 'ref-audio':{id:'ref-audio-path', path:'ref-audio-full', choose:'请选择参考音频', none:'maibot_refs 中还没有参考音频', unset:'尚未选择参考音频。'}};
+  const SIGNATURE_FIELDS = new Set(['base-url', 'sovits-model-picker', 'gpt-model-picker', 'lora-model-picker']);
+  const STEP_LABELS = {1:'API 配置测试',2:'选择底模',3:'声音模式',4:'参数与试听',5:'自动语音回复'};
+  const LAST_STEP = 5;
+  const UNSET_PATHS = new Set(['（不使用 LoRA）', '（请选择模型）']);
+  const STEP_TITLES = {1:'第一步 · API 配置',2:'第二步 · 底模',3:'第三步 · 声音模式',4:'第四步 · 参数与试听',5:'第五步 · 自动语音回复'};
+  const TASK_LABELS = {fast_model:'快速模型，推荐', utils:'工具模型', replyer:'回复模型', planner:'规划模型', learner:'学习模型', memory:'记忆模型', emoji:'表情包模型', vlm:'视觉模型'};
+  const EMOTION_LABELS = {happy:'开心', angry:'生气', surprised:'吃惊', neutral:'中立', sad:'难过'};
+  const ISSUE_LEVELS = {error:'错误', warning:'提醒', info:'说明'};
+  const PROMPT_REQUIRED = new Set(['v3', 'v4', 'v5dev', 'v5turbo']);
+  const SPLIT_LABELS = {cut0:'不切分', cut1:'每四句切分', cut2:'每 50 字切分', cut3:'按中文句号切分', cut4:'按英文句号切分', cut5:'按标点切分'};
+  const OPERATION_STEPS = {'test-api':1, 'scan-models':2, 'save-base':2, 'set-mode':3, 'save-models':3, 'refresh-refs':3, 'apply-role':3, 'refresh-roles':3, 'refresh-role-dir':3, 'refresh-llm-tasks':3, 'save-emotion-judge':3, 'test-emotion':3, 'save-parameters':4, 'preview-run':4, 'load-models':4, 'synthesize':4, 'cancel-job':4, 'save-auto':5};
+  const MAX_AUDIO_BYTES = 16777216;
+  const POLL_MS = 1000;
+  const ui = { sdk: null, initializing: true, hasState: false, enabled: true, alive: true, busy: '', step: 1, apiSaved: '', baseSaved: '', modelsSaved: '', verifiedApi: '', loadedSignature: '', signatureRevision: 0, connection: {status: 'idle', message: ''}, modelStatus: {status: 'idle', message: ''}, catalog: [], weights: {'gpt-weights':[], 'sovits-weights':[], 'lora-weights':[], 'ref-audio':[]}, refsDir: '', job: null, jobSignature: '', jobRevision: 0, jobSettings: '', jobEpoch: 0, pollTimer: null, readyTimer: null, polling: false, pollError: false, maxAudio: MAX_AUDIO_BYTES, audioUrl: '', audioJob: '', audioReading: false, audioError: false, audioEpoch: 0, needsRefresh: false, mode: 'original', roles: [], roleStatus: {status:'idle',message:'',profile:null}, enabledEmotions: [], emotionChecks: [], preparedEmotions: [], rolesDataDir: '', roleReadyKey: '', roleSelectionDirty: false, roleRevision: 0, jobRoleKey: '', jobRoleRevision: 0, catalogError: '', judgeSaved: '', judgeInitialized: false, llmTasks: [], llmTasksLoaded: false, llmTasksLoading: false, llmTasksError: '', emotionJudge: {}, savedBase: {base_model:'custom', sovits_weights:''}, parametersSaved:'', parametersInitialized:false, checkResult:null, checking:false, previewPending:null, jobParameters:'', autoSaved:'', autoInitialized:false, autoStats:{} };
+  const uiResume = {progress:null, state:null, autoUsed:false, manual:false, note:''};
+  const connectionEnsure = {promise:null, attempted:new Set(), error:''};
+  const autoCheck = {pending:false};
+  const requestQueue = []; let requestActive = false;
+  const pageClosedMessage = '页面已关闭，尚未开始的请求已取消；正在执行的操作会正常完成，请勿重复提交。';
+  function pumpRequests() {
+    if (requestActive) return;
+    const request = requestQueue.shift(); if (!request) return;
+    const {kind,name,args,resolve,reject} = request;
+    if (!ui.alive) { reject(new Error(pageClosedMessage)); pumpRequests(); return; }
+    requestActive = true;
+    // The slot owns only the raw SDK call, not continuations that enqueue more calls.
+    void (async () => {
+      try { resolve(await (kind === 'query' ? ui.sdk.query(name, args) : ui.sdk.action(name, args))); }
+      catch (error) { reject(error); }
+      finally { requestActive = false; pumpRequests(); }
+    })();
+  }
+  function scheduleRequest(kind, name, args) {
+    if (!ui.sdk) return Promise.reject(new Error('请在 MaiBot 内打开此页面。'));
+    if (!ui.alive) return Promise.reject(new Error(pageClosedMessage));
+    return new Promise((resolve,reject) => { requestQueue.push({kind,name,args,resolve,reject}); pumpRequests(); });
+  }
+  function closeQueuedRequests() {
+    // Active mutations may have succeeded; never abort/reject them and invite a retry.
+    for (const request of requestQueue.splice(0)) request.reject(new Error(pageClosedMessage));
+  }
+  function apiValues() { return {base_url: $('base-url').value, timeout: Number($('api-timeout').value)}; }
+  function modelValues() { return {root: $('model-root').value, base_model: baseModel(), gpt_weights: $('gpt-model-picker').value, sovits_weights: $('sovits-model-picker').value, lora_weights: $('lora-model-picker').value, ref_audio_path: $('ref-audio-path').value, prompt_text: $('prompt-text').value, prompt_lang: $('prompt-lang').value, text_lang: $('text-lang').value}; }
+  function parameterValues() { return Object.fromEntries(Object.entries(PARAM_FIELDS).map(([id,key]) => [key, ['parallel_infer','send_text'].includes(key) ? Boolean($(id).checked) : key === 'text_split_method' ? $(id).value : $(id).value.trim() === '' ? NaN : Number($(id).value)])); }
+  function fillParameters(config) {
+    const values = {...PARAM_DEFAULTS, ...(config.voice || {}), ...(config.behavior || {})};
+    for (const [id,key] of Object.entries(PARAM_FIELDS)) { if (['parallel_infer','send_text'].includes(key)) $(id).checked = typeof values[key] === 'boolean' ? values[key] : PARAM_DEFAULTS[key]; else $(id).value = String(values[key] ?? PARAM_DEFAULTS[key]); }
+    ui.parametersSaved = JSON.stringify(parameterValues()); ui.parametersInitialized = true;
+  }
+  function validateParameters(values) {
+    const ranges = {speed_factor:[0.5,2,false,'语速'],top_k:[1,100,true,'采样候选数'],top_p:[0,1,false,'核采样概率'],temperature:[0,2,false,'采样温度'],seed:[-1,2147483647,true,'随机种子'],max_text_length:[1,2000,true,'消息最大字数'],cooldown_seconds:[0,3600,false,'语音冷却']};
+    for (const [key,[min,max,integer,label]] of Object.entries(ranges)) if (!Number.isFinite(values[key]) || values[key] < min || values[key] > max || integer && !Number.isSafeInteger(values[key]) || ['top_p','temperature'].includes(key) && values[key] <= 0) throw new Error(label + '超出允许范围，请检查第四步参数。');
+    if (!/^cut[0-5]$/.test(values.text_split_method)) throw new Error('请选择有效的文本切分方式 cut0～cut5。');
+    for (const key of ['parallel_infer','send_text']) if (typeof values[key] !== 'boolean') throw new Error('并行推理与附带文字必须是开关值。');
+  }
+  async function saveParameters(values = parameterValues()) {
+    validateParameters(values); const result = await action('save_parameters', values); ui.parametersSaved = JSON.stringify(values); return result;
+  }
+  function parameterEdited() { uiResume.manual = true; revokeAudio(); update(); }
+  function autoValues() { return Object.fromEntries(Object.entries(AUTO_FIELDS).map(([id,key]) => [key, AUTO_SWITCHES.includes(key) ? Boolean($(id).checked) : key === 'frequency_mode' ? $(id).value : $(id).value.trim() === '' ? NaN : Number($(id).value)])); }
+  function autoDirty() { return ui.autoSaved !== JSON.stringify(autoValues()); }
+  function judgeValues() { return {llm_emotion: Boolean($('llm-emotion').checked), llm_task: String($('llm-task').value || '').trim() || 'fast_model'}; }
+  function judgeDirty() { return ui.judgeSaved !== JSON.stringify(judgeValues()); }
+  function emotionName(id) { return EMOTION_LABELS[id] || id; }
+  function fillLlmTasks(tasks, current) {
+    const select = $('llm-task'); const names = [...new Set([current, ...tasks, 'fast_model', 'utils'].filter((name) => typeof name === 'string' && name.trim()).map((name) => name.trim()))];
+    select.replaceChildren(); for (const name of names) addOption(select, name, name + (TASK_LABELS[name] ? '（' + TASK_LABELS[name] + '）' : ''));
+    select.value = current;
+  }
+  function fillJudge(config) {
+    const role = config && config.role || {};
+    $('llm-emotion').checked = role.llm_emotion !== false;
+    fillLlmTasks(ui.llmTasks, typeof role.llm_task === 'string' && role.llm_task.trim() ? role.llm_task.trim() : 'fast_model');
+    ui.judgeSaved = JSON.stringify(judgeValues()); ui.judgeInitialized = true;
+  }
+  async function loadLlmTasks(force = false) {
+    if (ui.llmTasksLoading || !force && ui.llmTasksLoaded || !ui.sdk || !ui.alive) return;
+    ui.llmTasksLoading = true; update();
+    try {
+      const result = await query('llm_tasks', {});
+      if (!ui.alive) return;
+      if (!result || result.success !== true || !Array.isArray(result.tasks)) throw new Error(result && result.message || 'MaiBot 没有返回模型任务列表。');
+      ui.llmTasks = result.tasks.filter((task) => typeof task === 'string' && task.trim()).map((task) => task.trim());
+      ui.llmTasksLoaded = true; ui.llmTasksError = ''; fillLlmTasks(ui.llmTasks, String($('llm-task').value || '').trim() || 'fast_model');
+      return ui.llmTasks.length;
+    } catch (error) { ui.llmTasksError = diagnostic(error); if (force) throw error; }
+    finally { ui.llmTasksLoading = false; update(); }
+  }
+  async function saveEmotionJudge() {
+    const values = judgeValues(); checkLength(values.llm_task, 80, '模型任务名');
+    const result = await action('save_emotion_judge', values); ui.judgeSaved = JSON.stringify(values); return result;
+  }
+  function judgeNote() {
+    const count = enabledEmotions().length; const values = judgeValues(); const last = ui.emotionJudge || {};
+    let note = count < 2 ? '当前只启用了 ' + count + ' 个情感：合成时直接使用它，不会调用 LLM；勾选 2 个以上情感并读取角色配置后生效。'
+      : !values.llm_emotion ? '已关闭：多情感时也只使用默认情感（自动语音仍可按情感标记或关键词选择）。'
+      : '已开启：合成前由 MaiBot 的 ' + values.llm_task + ' 从 ' + count + ' 个已启用情感中选择一个。';
+    if (judgeDirty()) note += ' 有未保存的修改。';
+    else if (count >= 2 && values.llm_emotion && last.source === 'llm') note += ' 最近一次判断：' + emotionName(String(last.emotion || '')) + (last.model ? '（' + String(last.model) + '）' : '') + '。';
+    else if (count >= 2 && values.llm_emotion && last.source === 'llm_failed') note += ' 最近一次判断失败，已使用默认情感：' + shortText(last.detail || '原因未知', 60);
+    if (ui.llmTasksError) note += ' 模型任务列表读取失败：' + shortText(ui.llmTasksError, 60);
+    return note;
+  }
+  function fillAuto(config) {
+    const values = {...AUTO_DEFAULTS, ...(config.auto_voice || {})};
+    for (const [id,key] of Object.entries(AUTO_FIELDS)) { if (AUTO_SWITCHES.includes(key)) $(id).checked = typeof values[key] === 'boolean' ? values[key] : AUTO_DEFAULTS[key]; else $(id).value = String(values[key] ?? AUTO_DEFAULTS[key]); }
+    ui.autoSaved = JSON.stringify(autoValues()); ui.autoInitialized = true;
+  }
+  function validateAuto(values) {
+    if (!['probability','every_n'].includes(values.frequency_mode)) throw new Error('请选择有效的自动语音频率方式。');
+    for (const [key,min,max,integer,label] of [['probability_percent',0,100,true,'转换概率'],['every_n',1,1000,true,'每 N 条'],['min_interval_seconds',0,3600,false,'最短转换间隔']]) if (!Number.isFinite(values[key]) || values[key] < min || values[key] > max || integer && !Number.isSafeInteger(values[key])) throw new Error(label + '超出允许范围，请检查第五步自动语音设置。');
+    for (const key of AUTO_SWITCHES) if (typeof values[key] !== 'boolean') throw new Error('自动语音开关必须是布尔值。');
+  }
+  async function autoSave(values = autoValues()) {
+    validateAuto(values); const result = await action('save_auto_voice',values); ui.autoSaved = JSON.stringify(values);
+    if (result.auto_stats && typeof result.auto_stats === 'object') ui.autoStats = result.auto_stats;
+    return result;
+  }
+  function autoEdited() { uiResume.manual = true; update(); }
+  function renderAutoStats() {
+    const stats = ui.autoStats || {}; const count = key => Number.isSafeInteger(stats[key]) && stats[key] >= 0 ? stats[key] : 0;
+    const reasons = {not_started:'尚未处理消息',disabled:'自动语音已关闭',inactive:'插件未启用',invalid_message:'消息格式无效',access:'会话不在允许范围',already_converted:'消息已转换过',duplicate:'重复消息已跳过',no_text:'没有可转换文字',command:'命令消息已跳过',non_text:'非纯文字消息已跳过',too_long:'文字超过长度限制',command_or_code:'命令或代码已跳过',tts_error:'语音合成失败，保留文字',own_speech:'插件自身提示已跳过',interval:'最短间隔未满，已跳过',busy:'语音任务繁忙，已跳过',frequency:'未命中转换频率，已跳过',converted:'已转换为语音',failed:'转换失败，保留文字',reply_planned:'已选中整句语音，本次不分段',planning_failed:'语音规划失败，保留原回复处理',reply_unselected:'本次完整回复未选中语音',reply_unmatched:'回复关联未确认，保留文字',reply_config_changed:'语音配置已变化，保留文字'};
+    const reason = String(stats.last_reason || ''); const reasonText = !reason ? '暂无' : Object.hasOwn(reasons,reason) ? reasons[reason] : '后台诊断：' + reason;
+    setText('auto-stats', '已考虑：' + count('considered') + ' · 已转换：' + count('converted') + ' · 已跳过：' + count('skipped') + ' · 失败：' + count('failed') + '\n最近原因：' + reasonText + '\n最近情感：' + String(stats.last_emotion || (ui.mode === 'role' ? '暂无' : '暂无（普通模式不选择情感）')));
+  }
+  function baseValues() { return {root:$('model-root').value, sovits_weights:$('sovits-model-picker').value}; }
+  function realPath(value) { const text = typeof value === 'string' ? value.trim() : ''; return UNSET_PATHS.has(text) ? '' : text; }
+  function pathKey(value) { return realPath(value).replace(/\\/g, '/').replace(/\/+$/, '').toLowerCase(); }
+  function detectBase(path) {
+    // 与后台 setup_save_base 规则一致：先匹配标准底模配对，再看扫描到的权重头版本；无法确认时按自定义权重。
+    const key = pathKey(path); if (!key) return {id:'', known:true};
+    const preset = ui.catalog.find((item) => item && typeof item.id === 'string' && typeof item.sovits_path === 'string' && pathKey(item.sovits_path) === key);
+    if (preset) return {id:preset.id, known:true};
+    const item = ui.weights['sovits-weights'].find((entry) => entry && typeof entry.path === 'string' && pathKey(entry.path) === key);
+    if (item) return {id:ui.catalog.some((entry) => entry && entry.id === item.version) ? item.version : 'custom', known:true};
+    if (key === pathKey(ui.savedBase.sovits_weights)) return {id:ui.savedBase.base_model || 'custom', known:false};
+    return {id:'custom', known:false};
+  }
+  function baseModel() { return detectBase($('sovits-model-picker').value).id || 'custom'; }
+  function baseDisplay(detection) { return !detection.id ? '（请先选择 SoVITS 权重）' : detection.id === 'custom' ? '自定义权重（未识别为已安装的标准底模）' : detection.id; }
+  function baseHelp(detection) {
+    if (!detection.id) return '选择 SoVITS 权重后自动识别底模版本，无需手动选择。';
+    if (!detection.known) return '扫描结果中没有该文件，暂按已保存的版本显示；保存时后台会读取文件头重新识别。';
+    if (detection.id === 'custom') return '未能识别为本机已安装的标准底模版本，将按自定义权重保存；使用 LoRA 需要标准底模。';
+    return '已根据所选权重自动识别为 ' + detection.id + ' 标准底模；版本变化时，保存会把 GPT 同步为该版本的配套底模，可在第三步更换。';
+  }
+  function enabledEmotions() { return [...new Set(ui.enabledEmotions)].sort(); }
+  function loraPath(value) { return typeof value === 'string' && value !== '（不使用 LoRA）' ? value : ''; }
+  function signature(api = apiValues(), models = modelValues()) { return JSON.stringify([String(api.base_url || '').trim().replace(/\/+$/, ''), String(models.base_model || '').trim() || 'custom', String(models.gpt_weights || '').trim(), String(models.sovits_weights || '').trim(), loraPath(models.lora_weights).trim()]); }
+  function apiReady() { return Boolean(ui.verifiedApi && ui.verifiedApi === JSON.stringify(apiValues())); }
+  function modelReady() { return Boolean(ui.loadedSignature && ui.loadedSignature === signature() && (ui.mode !== 'role' || roleReady())); }
+  function selectedRoleKey() { return JSON.stringify([$('role-picker').value, $('emotion-picker').value, enabledEmotions()]); }
+  function roleReady() { return Boolean(!ui.roleSelectionDirty && selectedRole() && selectedEmotion() && ui.roleReadyKey && ui.roleReadyKey === selectedRoleKey()); }
+  function running() { return Boolean(ui.job && ui.job.status === 'running'); }
+  function setText(id, text) { $(id).textContent = text; }
+  function message(text, tone = 'info') { if (!ui.alive) return; setText('global-message', text); $('global-status').dataset.tone = tone; $('global-status').setAttribute('role', tone === 'error' ? 'alert' : 'status'); }
+  function diagnostic(error) { const detail = error && typeof error.message === 'string' ? error.message : String(error || '未知原因'); return /[\u3400-\u9fff]/u.test(detail) ? detail : '请求未完成，请检查服务和网络后重试。诊断信息：' + detail; }
+  function badge(id, labelId, text, tone) { setText(labelId, text); $(id).dataset.tone = tone || 'info'; }
+  function shortText(text, limit = 90) { const chars = Array.from(String(text || '')); return chars.length > limit ? chars.slice(0, limit).join('') + '…' : chars.join(''); }
+  function savedJson(value) { try { const parsed = JSON.parse(value || '{}'); return parsed && typeof parsed === 'object' ? parsed : {}; } catch (_) { return {}; } }
+  function setStepStatus(step, tone, text) { const item = $('status-step-' + step); item.dataset.tone = tone; item.title = tone === 'error' ? '点击前往第' + step + '步处理' : '点击前往第' + step + '步'; setText('status-step-' + step + '-text', text); }
+  function apiStepStatus(connected, apiDirty, confirming) {
+    if (ui.initializing) return ['info', '正在读取…'];
+    if (apiDirty) return ['error', '接口设置有未保存的修改，请点击“保存并测试连接”。'];
+    if (connected) return ['success', '已连接：' + $('base-url').value.trim()];
+    if (confirming || ui.connection.status === 'running') return ['info', '正在确认接口连接…'];
+    if (!ui.enabled) return ['error', '插件已禁用，请先在 MaiBot 中启用插件。'];
+    if (ui.connection.status === 'error') return ['error', shortText(ui.connection.message || '接口连接失败，请检查服务后重新测试。')];
+    return ['error', '尚未测试连接，请点击“保存并测试连接”。'];
+  }
+  function baseStepStatus(baseDirty) {
+    if (ui.initializing) return ['info', '正在读取…'];
+    if (baseDirty) return ['error', '有未保存的修改，请点击“保存底模并继续”。'];
+    const saved = savedJson(ui.baseSaved); const sovits = realPath(saved.sovits_weights);
+    if (!realPath(saved.root)) return ['error', '尚未填写本机模型目录。'];
+    if (ui.catalogError) return ['error', '模型目录扫描失败：' + shortText(ui.catalogError)];
+    if (!sovits) return ['error', '尚未选择 SoVITS 底模或完整权重。'];
+    const detection = detectBase(sovits); const savedBase = ui.savedBase.base_model || 'custom';
+    if (detection.known && detection.id !== savedBase) return ['error', '已保存的底模版本（' + savedBase + '）与自动识别结果（' + detection.id + '）不一致，请重新保存第二步。'];
+    return ['success', (savedBase === 'custom' ? '自定义权重' : savedBase + ' 底模') + ' · ' + weightFilename(sovits)];
+  }
+  function voiceStepStatus() {
+    if (ui.initializing) return ['info', '正在读取…'];
+    if (ui.mode === 'role') {
+      if (running() && ui.job.kind === 'prepare_role') return ['info', '正在读取并校验角色配置…'];
+      if (!ui.roles.length) return ['error', '未找到角色，请把角色文件夹放到 GPT-SoVITS 目录下的 maibot_roles 后刷新角色列表。'];
+      const role = selectedRole(); if (!role) return ['error', '尚未选择角色。'];
+      if (!ui.enabledEmotions.length) return ['error', '请至少勾选一个情感。'];
+      if (roleReady()) {
+        const count = enabledEmotions().length; const values = judgeValues(); const last = ui.emotionJudge || {};
+        if (count >= 2 && judgeDirty()) return ['error', '情感判断设置有未保存的修改，请点击“保存情感判断设置”。'];
+        if (count >= 2 && values.llm_emotion && last.source === 'llm_failed') return ['error', '最近一次 LLM 情感判断失败，已使用默认情感：' + shortText(last.detail || '原因未知', 60)];
+        const emotion = selectedEmotion();
+        return ['success', '角色模式 · ' + String(role.name || role.id) + ' · 默认' + String(emotion && (emotion.label || emotion.id) || '') + ' · 共 ' + count + ' 个情感' + (count < 2 ? '' : values.llm_emotion ? ' · LLM 判断情感（' + values.llm_task + '）' : ' · 未开启 LLM 判断')];
+      }
+      if (ui.roleStatus && ui.roleStatus.status === 'error' && !ui.roleSelectionDirty) return ['error', shortText(ui.roleStatus.message || '角色读取失败，请检查角色文件后重试。')];
+      return ['error', '尚未读取当前角色配置，请点击“读取角色配置”。'];
+    }
+    const saved = savedJson(ui.modelsSaved); const gpt = realPath(saved.gpt_weights); const lora = realPath(saved.lora_weights);
+    if ($('gpt-model-picker').value !== String(saved.gpt_weights ?? '') || $('lora-model-picker').value !== String(saved.lora_weights ?? '') || referenceDirty()) return ['error', 'GPT、LoRA 或参考音频有未保存的修改，请点击“仅保存设置”。'];
+    if (!gpt) return ['error', '尚未选择 GPT 权重。'];
+    if (lora && !/\.pth$/i.test(lora)) return ['error', 'LoRA 必须是 .pth 权重，GPT 的 .ckpt 不是 LoRA。'];
+    if (lora && (saved.base_model || 'custom') === 'custom') return ['error', '使用 LoRA 需要第二步识别为标准底模，请检查所选 SoVITS 权重。'];
+    const reference = realPath(saved.ref_audio_path);
+    if (!reference) return ['error', '普通模式尚未选择参考音频（放在 GPT-SoVITS 目录下的 maibot_refs）。'];
+    if (!String(saved.prompt_lang || '').trim() || !String(saved.text_lang || '').trim()) return ['error', '请填写参考音频语言和合成文字语言。'];
+    if (PROMPT_REQUIRED.has(saved.base_model) && !String(saved.prompt_text || '').trim()) return ['error', '当前底模 ' + saved.base_model + ' 必须填写参考音频对应的文字。'];
+    return ['success', '普通模式 · GPT：' + weightFilename(gpt) + ' · ' + (lora ? 'LoRA：' + weightFilename(lora) : '不使用 LoRA') + ' · 参考音频 ' + weightFilename(reference)];
+  }
+  function savedStep(step) { const progress = uiResume.progress; return Boolean(progress && (progress.saved_steps || progress.completed_steps || []).includes(step)); }
+  function referenceDirty() { const saved = savedJson(ui.modelsSaved); const current = modelValues(); return ['ref_audio_path', 'prompt_text', 'prompt_lang', 'text_lang'].some((key) => String(current[key] ?? '') !== String(saved[key] ?? '')); }
+  function previewDone() { return Boolean(uiResume.progress && uiResume.progress.preview_done || ui.audioUrl); }
+  function parameterProblem(parametersDirty) {
+    // 参考音频属于第三步；第四步只看生成参数是否已保存。
+    if (parametersDirty) return '参数有未保存的修改，请点击“保存参数”。';
+    if (!savedStep(4)) return '参数尚未保存过（默认参数也需要保存一次）。';
+    return '';
+  }
+  function parameterStepStatus(parametersDirty) {
+    if (ui.initializing) return ['info', '正在读取…'];
+    const problem = parameterProblem(parametersDirty); if (problem) return ['error', problem];
+    // 试听可选：只有失败的加载/试听任务算问题，没试听不算。
+    const job = ui.job && ['load_models', 'synthesize'].includes(ui.job.kind) ? ui.job : null;
+    if (job && job.status === 'running') return ['info', job.kind === 'load_models' ? '参数已保存 · 正在加载模型…' : '参数已保存 · 正在生成试听…'];
+    if (job && job.status === 'error') return ['error', (job.kind === 'load_models' ? '模型加载失败：' : '试听失败：') + shortText(job.message || '请查看后台任务。')];
+    const values = parameterValues();
+    return ['success', '参数已保存 · 语速 ' + values.speed_factor + ' · ' + (SPLIT_LABELS[values.text_split_method] || values.text_split_method) + ' · ' + (previewDone() ? '已试听' : '试听可选，尚未试听')];
+  }
+  function autoStepStatus() {
+    if (ui.initializing) return ['info', '正在读取…'];
+    if (autoDirty()) return ['error', '自动语音有未保存的修改，请点击“保存自动语音设置”。'];
+    const values = autoValues(); const stats = ui.autoStats || {};
+    if (values.enabled && stats.last_reason === 'failed') return ['error', '最近一次自动语音转换失败，已保留文字；请检查接口与模型。'];
+    if (!savedStep(5)) return ['error', '尚未保存自动语音设置（保持关闭也需要保存一次）。'];
+    return ['success', values.enabled ? '已启用 · ' + (values.frequency_mode === 'every_n' ? '每 ' + values.every_n + ' 条转换一条' : '按概率 ' + values.probability_percent + '%') + ' · 最短间隔 ' + values.min_interval_seconds + ' 秒' : '已关闭（只使用命令和语音工具）'];
+  }
+  // 每一步配置完成（已保存且有效）才能进入下一步；已到达的步骤随时可以返回。
+  // 只看配置：试听/加载结果、最近一次 LLM 判断失败等运行情况不阻止前进。
+  function apiComplete(apiDirty) {
+    if (apiDirty) return false;
+    if (apiReady()) return true;
+    // 此前验证过且未修改的地址会在打开页面时自动确认：确认前或确认中暂按已完成，确认失败或插件禁用（无法确认）才算未完成。
+    return Boolean(ui.enabled && savedConnectionConfigured() && savedApiKey() === JSON.stringify(apiValues()) && ui.connection.status !== 'error' && !connectionEnsure.error);
+  }
+  function voiceComplete() {
+    if (ui.mode === 'role') return roleReady() && !(enabledEmotions().length >= 2 && judgeDirty());
+    return voiceStepStatus()[0] === 'success';
+  }
+  function stepDone(step) {
+    if (ui.initializing) return false;
+    if (step === 1) return apiComplete(ui.apiSaved !== JSON.stringify(apiValues()));
+    if (step === 2) return baseStepStatus(ui.baseSaved !== JSON.stringify(baseValues()))[0] === 'success';
+    if (step === 3) return voiceComplete();
+    if (step === 4) return !parameterProblem(ui.parametersSaved !== JSON.stringify(parameterValues()));
+    return !autoDirty() && savedStep(5);
+  }
+  // 可以前往的最远一步：第一个未完成的步骤（它之前的步骤都已完成）。
+  function firstIncompleteStep() { for (let step = 1; step < LAST_STEP; step += 1) if (!stepDone(step)) return step; return LAST_STEP; }
+  function canEnterStep(step) { return step <= ui.step || step <= firstIncompleteStep(); }
+  function stepProblemText(step) {
+    const apiDirty = ui.apiSaved !== JSON.stringify(apiValues());
+    const [, text] = step === 1 ? apiStepStatus(apiReady(), apiDirty, Boolean(connectionEnsure.promise))
+      : step === 2 ? baseStepStatus(ui.baseSaved !== JSON.stringify(baseValues()))
+      : step === 3 ? voiceStepStatus()
+      : step === 4 ? parameterStepStatus(ui.parametersSaved !== JSON.stringify(parameterValues())) : autoStepStatus();
+    return text;
+  }
+  function blockedMessage(step) { return '请先完成第' + step + '步「' + STEP_LABELS[step] + '」：' + stepProblemText(step) + ' 每一步配置完成后才能进入下一步。'; }
+  function renderStepStatus(connected, apiDirty, confirming, baseDirty, parametersDirty) {
+    setStepStatus(1, ...apiStepStatus(connected, apiDirty, confirming));
+    setStepStatus(2, ...baseStepStatus(baseDirty));
+    setStepStatus(3, ...voiceStepStatus());
+    setStepStatus(4, ...parameterStepStatus(parametersDirty));
+    setStepStatus(5, ...autoStepStatus());
+  }
+  function update() {
+    if (!ui.alive) return;
+    const blocked = ui.initializing;
+    const unavailable = blocked || !ui.sdk;
+    const busy = Boolean(ui.busy || ui.audioReading);
+    const confirming = Boolean(connectionEnsure.promise);
+    const parametersDirty = ui.parametersSaved !== JSON.stringify(parameterValues());
+    const jobBusy = running();
+    const connected = apiReady();
+    const ready = modelReady();
+    const apiDirty = ui.apiSaved !== JSON.stringify(apiValues());
+    const modelsDirty = ui.modelsSaved !== JSON.stringify(modelValues());
+    const baseDirty = ui.baseSaved !== JSON.stringify(baseValues());
+    for (const id of API_FIELDS.concat(MODEL_FIELDS, Object.keys(PARAM_FIELDS), Object.keys(AUTO_FIELDS), ['test-text', 'base-model'])) $(id).disabled = blocked;
+    for (const id of ['back-step', 'role-back-step', 'base-back-step', 'parameters-back', 'auto-back', 'status-step-1', 'status-step-2', 'status-step-3', 'status-step-4', 'status-step-5']) $(id).disabled = blocked || busy;
+    const reachable = firstIncompleteStep();
+    for (const [id, step] of [['step-api', 1], ['step-base', 2], ['step-models', 3], ['step-parameters', 4], ['step-auto', 5]]) {
+      const locked = step > ui.step && step > reachable;
+      $(id).disabled = blocked || busy || locked;
+      $(id).title = locked ? '请先完成第' + reachable + '步「' + STEP_LABELS[reachable] + '」' : '';
+    }
+    $('next-parameters').disabled = blocked || busy || reachable < 4;
+    $('next-auto').disabled = blocked || busy || reachable < 5;
+    $('refresh-state').disabled = unavailable || busy;
+    for (const id of ['test-api', 'save-base', 'refresh-role-dir', 'save-models', 'save-parameters', 'save-auto', 'scan-models', 'refresh-refs']) $(id).disabled = unavailable || busy || jobBusy;
+    $('check-config').disabled = unavailable || ui.checking;
+    $('resume-config').disabled = unavailable || busy || !uiResume.progress;
+    $('retry-connection').hidden = !connectionEnsure.error;
+    $('retry-connection').disabled = unavailable || busy || jobBusy || confirming || !ui.enabled || !savedConnectionConfigured() || savedApiKey() !== JSON.stringify(apiValues());
+    for (const id of ['test-api','save-base','save-models','save-parameters','save-auto','load-models','apply-role']) if (confirming) $(id).disabled = true;
+    // 第二步还没有选择 SoVITS 底模时不能保存。
+    const baseMissing = !$('sovits-model-picker').value.trim();
+    if (baseMissing) $('save-base').disabled = true;
+    $('save-base').title = baseMissing ? '请先在下拉框中选择 SoVITS 底模或完整权重' : '';
+    $('preview-run').disabled = unavailable || busy || jobBusy || confirming || Boolean(ui.previewPending) || !ui.enabled || (!connected && !canEnsureConnection()) || ui.needsRefresh || ui.mode === 'role' && !roleReady();
+    $('next-step').disabled = unavailable || busy || reachable < 2;
+    $('load-models').disabled = unavailable || busy || jobBusy || !ui.enabled || !connected || ui.needsRefresh;
+    $('synthesize').disabled = unavailable || busy || jobBusy || !ui.enabled || !connected || !ready || ui.needsRefresh;
+    $('cancel-job').disabled = unavailable || Boolean(ui.busy) || !jobBusy;
+    $('retry-job').disabled = unavailable || busy || ui.polling || !jobBusy;
+    $('retry-job').hidden = !ui.pollError;
+    $('retry-audio').hidden = !ui.audioError;
+    $('retry-audio').disabled = unavailable || busy || !ui.audioError;
+    $('main').setAttribute('aria-busy', String(ui.initializing || busy || confirming));
+    $('connection-required').hidden = connected && ui.enabled;
+    setText('connection-required', ui.enabled ? confirming ? '正在自动确认连接…（只读取已保存地址，不会切换模型）' : connectionEnsure.error || (canEnsureConnection() ? '已识别保存的配置，将自动确认接口连接；连接成功后可继续加载与试听。' : '接口尚未测试成功，请返回第一步测试连接。') : '插件当前已禁用，仍可查看、选择和编辑模型配置；请在原生配置页启用插件并测试连接后，再手动加载与试听。');
+    $('panel-api').hidden = ui.step !== 1;
+    $('base-card').hidden = ui.step !== 2;
+    $('mode-card').hidden = ui.step !== 3;
+    $('panel-models').hidden = ui.step !== 3 || ui.mode !== 'original';
+    $('role-card').hidden = ui.step !== 3 || ui.mode !== 'role';
+    for (const mode of ['original', 'role']) { const button = $(mode + '-mode-btn'); button.disabled = unavailable || busy || jobBusy; button.setAttribute('aria-selected', String(ui.mode === mode)); button.setAttribute('tabindex', ui.mode === mode ? '0' : '-1'); }
+    for (const id of ['role-picker','emotion-picker','role-data-dir','refresh-roles','apply-role']) $(id).disabled = unavailable || busy;
+    for (const checkbox of ui.emotionChecks) checkbox.disabled = unavailable || busy;
+    $('apply-role').disabled = unavailable || busy || jobBusy || !selectedRole() || !selectedEmotion() || !ui.enabledEmotions.length || ui.enabledEmotions.length > 50 || ui.needsRefresh;
+    $('role-load-models').disabled = $('load-models').disabled || !roleReady();
+    $('role-synthesize').disabled = $('synthesize').disabled || !roleReady();
+    if (ui.mode === 'role') { $('load-models').disabled = $('load-models').disabled || !roleReady(); $('synthesize').disabled = $('synthesize').disabled || !roleReady(); }
+    $('role-ref-text').readOnly = true; $('role-data-dir').readOnly = true; $('base-model').readOnly = true;
+    for (const id of ['llm-emotion', 'llm-task', 'emotion-test-text']) $(id).disabled = blocked;
+    $('save-emotion-judge').disabled = unavailable || busy;
+    $('refresh-llm-tasks').disabled = unavailable || busy || ui.llmTasksLoading;
+    const emotionTestReady = ui.mode === 'role' && roleReady() && enabledEmotions().length >= 2;
+    $('test-emotion').disabled = unavailable || busy || !emotionTestReady;
+    // 还没有试判断结果时，提示文字跟随当前是否可以试判断。
+    if (!$('emotion-test-result').dataset.tone) setText('emotion-test-result', emotionTestReady ? '输入一句话后点击“试判断”：只调用 MaiBot 的 LLM 判断情感，不合成语音。' : '读取角色配置并启用 2 个以上情感后可试判断。');
+    setText('emotion-judge-note', judgeNote());
+    setText('refresh-llm-tasks', ui.llmTasksLoading ? '正在读取…' : '刷新模型任务');
+    setText('save-emotion-judge', ui.busy === 'save-emotion-judge' ? '正在保存…' : '保存情感判断设置');
+    setText('test-emotion', ui.busy === 'test-emotion' ? '正在判断…' : '试判断');
+    $('auto-card').hidden = ui.step !== 5;
+    $('auto-follow-emotion').disabled = blocked || ui.mode !== 'role';
+    $('auto-probability').disabled = blocked || $('auto-frequency-mode').value !== 'probability';
+    $('auto-every-n').disabled = blocked || $('auto-frequency-mode').value !== 'every_n';
+    setText('auto-follow-emotion-help', ui.mode === 'role' ? '角色模式：默认开启；只在第三步已勾选情感中选择，' + (enabledEmotions().length >= 2 && $('llm-emotion').checked ? '由 MaiBot 的 LLM 判断每句话的情感，' : '') + '不明确时使用默认情感。' : '普通模式：此开关不生效，只使用当前单一 LoRA（或底模），不选择情感。');
+    setText('auto-dirty', autoDirty() ? '自动语音有未保存的修改；与模型及生成参数独立保存。' : '自动语音设置已保存；保存不发 QQ、不合成。');
+    setText('save-auto', ui.busy === 'save-auto' ? '正在保存…' : '保存自动语音设置'); renderAutoStats();
+    $('step-auto').toggleAttribute('aria-current', ui.step === 5); if (ui.step === 5) $('step-auto').setAttribute('aria-current','step');
+    $('parameters-card').hidden = ui.step !== 4;
+    $('preview-card').hidden = ui.step !== 4;
+    $('test-card').hidden = ui.step !== 4;
+    $('role-reference').hidden = ui.mode !== 'role'; $('role-preview-actions').hidden = ui.mode !== 'role';
+    // 第三步说明里显示实际的 maibot_refs / maibot_roles 路径（来自后台扫描；未扫描时按已保存的本机模型目录推算）。
+    const savedRoot = String(savedJson(ui.baseSaved).root || '').trim().replace(/[\\/]+$/, '');
+    setText('refs-dir-hint', ui.refsDir || (savedRoot ? savedRoot + '/maibot_refs' : '<GPT-SoVITS 安装目录>/maibot_refs'));
+    setText('roles-dir-hint', ui.rolesDataDir || (savedRoot ? savedRoot + '/maibot_roles' : '<GPT-SoVITS 安装目录>/maibot_roles'));
+    setText('role-reference-path', $('ref-audio-path').value || '请先在第三步读取角色配置。');
+    setText('parameters-dirty', parametersDirty ? '参数有未保存的修改；保存参数不会切换模型。' : '生成与消息参数已保存。');
+    setText('preview-run', ui.previewPending ? '正在加载，成功后自动生成…' : '加载并生成试听');
+    $('step-parameters').toggleAttribute('aria-current', ui.step === 4);
+    if (ui.step === 4) $('step-parameters').setAttribute('aria-current', 'step');
+    setText('job-preview', ui.job ? ({load_models:'模型加载',synthesize:'语音试听',prepare_role:'角色准备'}[ui.job.kind] || '后台任务') + '：' + String(ui.job.message || ui.job.status) + '（详细进度见第四步）' : '暂无后台任务。');
+    $('step-api').toggleAttribute('aria-current', ui.step === 1);
+    $('step-base').toggleAttribute('aria-current', ui.step === 2);
+    $('step-models').toggleAttribute('aria-current', ui.step === 3);
+    if (ui.step === 1) $('step-api').setAttribute('aria-current', 'step');
+    if (ui.step === 2) $('step-base').setAttribute('aria-current', 'step');
+    if (ui.step === 3) $('step-models').setAttribute('aria-current', 'step');
+    setText('base-dirty', baseMissing ? ($('sovits-model-picker').options.length > 1 ? '请先在上方下拉框中选择 SoVITS 底模或完整权重，选择后才能保存。' : '请先填写本机模型目录并扫描，再选择 SoVITS 底模或完整权重。') : baseDirty ? '模型目录或 SoVITS 权重有未保存的修改；保存不会加载模型。' : '底模设置已保存；下一步配置角色或普通模式。');
+    setText('api-dirty', apiDirty ? '有未保存的接口修改；请重新保存并测试。' : connected ? '当前接口设置已保存并测试成功。' : '当前接口设置已保存，尚未测试成功。');
+    setText('models-dirty', modelsDirty ? '有未保存的模型或声音参数；保存不会自动加载模型。' : '当前模型与声音参数已保存。');
+    for (const spec of Object.values(PICKERS)) { const value = $(spec.id).value; $(spec.id).title = value; setText(spec.path, value ? '完整路径：' + value : spec.unset); }
+    const detection = detectBase($('sovits-model-picker').value); $('base-model').value = baseDisplay(detection); setText('base-model-help', baseHelp(detection));
+    renderStepStatus(connected, apiDirty, confirming, baseDirty, parametersDirty);
+    const connectionLabel = ui.initializing ? '正在读取' : connected ? '连接成功' : apiDirty ? '未保存' : ui.connection.status === 'running' ? '正在测试' : ui.connection.status === 'error' ? '连接失败' : '待测试';
+    badge('connection-badge', 'connection-label', connectionLabel, connected ? 'success' : ui.connection.status === 'error' && !apiDirty ? 'error' : 'info');
+    badge('models-badge', 'models-label', ready ? '模型已就绪' : running() && ui.job.kind === 'load_models' ? '正在加载' : ui.modelStatus.status === 'error' ? '加载失败' : '需要加载', ready ? 'success' : ui.modelStatus.status === 'error' ? 'error' : 'info');
+    setText('synthesize-requirement', !ui.enabled ? '插件已禁用，请先在原生配置页启用。' : ui.needsRefresh ? '任务启动结果未确认，请先刷新状态。' : confirming ? '正在自动确认连接…' : !connected ? connectionEnsure.error || (canEnsureConnection() ? '已保存配置，可自动确认连接后继续试听。' : '请先在第一步测试连接。') : ui.mode === 'role' && !roleReady() ? '请先在第三步读取当前角色配置。' : !ready ? '可点击“加载并生成试听”，先加载权重再合成。' : modelsDirty || parametersDirty ? '当前参数将先保存；仅生成按钮不会切换模型。' : '使用已加载模型，音频不会自动播放。');
+    setText('text-count', Array.from($('test-text').value).length + ' / 300 字');
+    const busyLabels = {'test-api':'正在保存并测试…', 'scan-models':'正在扫描…', 'refresh-refs':'正在扫描…', 'save-models':'正在保存…', 'load-models':'正在创建加载任务…', 'synthesize':'正在创建试听任务…', 'refresh-state':'正在刷新…', 'cancel-job':'正在取消…'};
+    const defaults = {'test-api':'保存并测试连接', 'scan-models':'扫描本机目录', 'refresh-refs':'刷新参考音频', 'save-models':'仅保存设置', 'load-models':'保存并加载模型', 'synthesize':'仅生成试听', 'cancel-job':'取消后台任务'};
+    for (const [id, label] of Object.entries(defaults)) setText(id, ui.busy === id ? busyLabels[id] : label);
+    $('refresh-state').setAttribute('aria-label', ui.busy === 'refresh-state' ? '正在刷新状态' : '刷新状态');
+  }
+  function query(name, args) { return scheduleRequest('query', name, args); }
+  async function action(name, args) { const result = await scheduleRequest('action', name, args); if (!result || result.success !== true) throw new Error(result && result.message || '操作未成功，请检查设置后重试。'); return result; }
+  async function operate(id, callback) {
+    if (ui.busy || ui.audioReading || ui.initializing || !ui.sdk) return;
+    uiResume.manual = true; uiResume.autoUsed = true; ui.busy = id; clearOperationError(); update();
+    try { await callback(); } catch (error) { showOperationError(error, OPERATION_STEPS[id] || ui.step); }
+    finally { ui.busy = ''; update(); scheduleCheck(); }
+  }
+  function scheduleCheck() {
+    // 每次按钮操作、后台任务结束或连接确认后自动重新检查；检查进行中则合并为一次补查。
+    if (!ui.alive || !ui.sdk || ui.initializing) return;
+    if (ui.checking) { autoCheck.pending = true; return; }
+    void checkConfig();
+  }
+  function clearOperationError() { $('operation-error').hidden = true; setText('operation-error-message', ''); }
+  function showOperationError(error, step = ui.step) {
+    // 失败原因固定显示在左栏最下方；顶部只提示去哪里看。
+    if (!ui.alive) return;
+    setText('operation-error-message', '第' + step + '步 · ' + STEP_LABELS[step] + '：' + diagnostic(error));
+    $('operation-error').hidden = false; message('操作失败，原因显示在页面左栏最下方。', 'error');
+    if (typeof $('operation-error').scrollIntoView === 'function') $('operation-error').scrollIntoView({block:'nearest'});
+  }
+  function checkLength(value, maximum, label) { if (Array.from(value).length > maximum) throw new Error(label + '超过允许长度。'); }
+  function validateApi(values) {
+    checkLength(values.base_url, 2048, '接口地址');
+    let url; try { url = new URL(values.base_url); } catch (_) { throw new Error('请填写完整的接口地址，例如 http://127.0.0.1:9880。'); }
+    if (!['http:', 'https:'].includes(url.protocol)) throw new Error('接口地址必须以 http:// 或 https:// 开头。');
+    if (!Number.isFinite(values.timeout) || values.timeout < 1 || values.timeout > 240) throw new Error('请求超时必须是 1～240 秒之间的数字。');
+  }
+  function validateModels(values, requireWeights = false, requireVoice = false) {
+    for (const key of ['root', 'gpt_weights', 'sovits_weights', 'lora_weights', 'ref_audio_path']) checkLength(values[key], 1024, '目录或路径');
+    checkLength(values.base_model, 80, '底模预设'); checkLength(values.prompt_text, 4000, '参考文字');
+    checkLength(values.prompt_lang, 32, '参考音频语言'); checkLength(values.text_lang, 32, '合成文字语言');
+    if (values.lora_weights.trim() && !/\.pth$/i.test(values.lora_weights.trim())) throw new Error('LoRA 请填写 .pth 权重路径，不能使用 GPT .ckpt。');
+    if (requireWeights && (!values.gpt_weights.trim() || !values.sovits_weights.trim())) throw new Error('请填写配套的 GPT 和 SoVITS 权重路径。');
+    if (requireVoice && (!values.ref_audio_path.trim() || !values.prompt_lang.trim() || !values.text_lang.trim())) throw new Error('试听前请在第三步选择参考音频并填写两种语言代码。');
+  }
+  function revokeAudio() {
+    ui.audioEpoch += 1;
+    const player = $('audio-player'); player.pause(); player.removeAttribute('src'); player.load();
+    $('download-audio').removeAttribute('href'); $('audio-block').hidden = true;
+    if (ui.audioUrl) URL.revokeObjectURL(ui.audioUrl);
+    ui.audioUrl = ''; ui.audioJob = ''; ui.audioError = false;
+  }
+  function edited(event) {
+    uiResume.manual = true;
+    if (BASE_FIELDS.includes(event.target.id) && ui.mode === 'role') invalidateRole('底模或扫描目录已改变，请保存底模并重新读取角色配置。');
+    if (SIGNATURE_FIELDS.has(event.target.id)) { ui.signatureRevision += 1; ui.loadedSignature = ''; ui.modelStatus = {status:'idle', message:'模型或接口地址已修改，请手动加载当前权重。'}; setText('model-message', ui.modelStatus.message); }
+    if (API_FIELDS.includes(event.target.id)) { ui.verifiedApi = ''; ui.connection = {status:'idle',message:'接口设置已修改，请保存并重新测试。'}; setText('connection-message', ui.connection.message); }
+    revokeAudio(); update();
+  }
+  async function saveApi(values) { validateApi(values); const result = await action('save_api', values); ui.apiSaved = JSON.stringify(values); return result; }
+  async function saveBase() {
+    const values = baseValues(); checkLength(values.root, 1024, '本机模型目录'); checkLength(values.sovits_weights, 1024, 'SoVITS 权重路径');
+    if (!values.root.trim()) throw new Error('请填写本机模型目录并扫描。');
+    if (!values.sovits_weights.trim()) throw new Error('请选择 SoVITS 底模或完整权重。');
+    const result = await action('save_base', values);
+    if (JSON.stringify(values) !== JSON.stringify(baseValues())) throw new Error('保存期间底模设置已修改，请重新保存当前选择。');
+    await loadState(true);
+    ui.baseSaved = JSON.stringify(values);
+    // 保存成功但前面的步骤还没完成时留在原处说明原因，不跳过未完成的步骤。
+    if (!canEnterStep(3)) { update(); message('底模设置已保存。' + blockedMessage(firstIncompleteStep()), 'info'); return; }
+    showStep(3); message(result.message || '底模设置已保存，请选择角色模式或普通模式；未加载模型。', 'success');
+  }
+  async function saveModels(values, requireWeights = false, requireVoice = false) { validateModels(values, requireWeights, requireVoice); const result = await action('save_models', values); ui.modelsSaved = JSON.stringify(values); return result; }
+  function showStep(step, manual = true) {
+    if (manual) { uiResume.manual = true; uiResume.autoUsed = true; }
+    if (!canEnterStep(step)) {
+      // 不能跳过未完成的步骤：转到第一个未完成的步骤并说明原因。
+      const target = firstIncompleteStep();
+      message(blockedMessage(target), 'error');
+      if (target === ui.step) { update(); return; }
+      step = target;
+    }
+    ui.step = step; update();
+    $({1:'api-title',2:'base-title',3:'mode-title',4:'parameters-title',5:'auto-title'}[step]).focus();
+    if (step === 3 && ui.mode === 'role') void loadLlmTasks();
+    if (step > 1 && !apiReady()) {
+      if (connectionEnsure.promise) message('正在自动确认连接…');
+      else if (canEnsureConnection() && ui.connection.status === 'idle') void ensureConnection();
+      else if (connectionEnsure.error) message(connectionEnsure.error, 'error');
+    }
+  }
+  function normalizeProgress(value) {
+    if (!value || !Number.isInteger(value.next_step) || value.next_step < 1 || value.next_step > LAST_STEP) return null;
+    const steps = (list) => Array.isArray(list) ? list.filter(step => Number.isInteger(step) && step >= 1 && step <= LAST_STEP) : null;
+    const completed = steps(value.completed_steps) || [];
+    return {next_step:value.next_step, message:typeof value.message === 'string' ? value.message : '', completed_steps:completed, saved_steps:steps(value.saved_steps) || completed, preview_done:value.preview_done === true, needs_revalidate:value.needs_revalidate === true};
+  }
+  function inferProgress(state) {
+    const config = state && state.config || {}; const api = config.api || {}; const models = config.models || {}; const voice = config.voice || {}; const role = config.role || {};
+    const completed = []; const result = step => ({next_step:step, message:'后台未提供配置进度，已按已保存配置保守恢复。', completed_steps:completed, needs_revalidate:!state || !state.connection || state.connection.status !== 'success'});
+    try { validateApi(api); } catch (_) { return result(1); }
+    if (!state.connection || state.connection.status !== 'success') return result(1);
+    completed.push(1);
+    // A default custom preset alone is not evidence of a configured base.
+    if (!/\.pth$/i.test(String(models.sovits_weights || '').trim())) return result(2);
+    completed.push(2);
+    if (role.mode === 'role') { if (!roleReady()) return result(3); }
+    else if (!/\.ckpt$/i.test(String(models.gpt_weights || '').trim())) return result(3);
+    completed.push(3);
+    const parameters = {...(config.voice || {}), ...(config.behavior || {})};
+    if (!String(voice.ref_audio_path || '').trim() || !String(voice.prompt_lang || '').trim() || !String(voice.text_lang || '').trim() || !Object.values(PARAM_FIELDS).every(key => Object.hasOwn(parameters,key))) return result(4);
+    try { validateParameters(parameters); } catch (_) { return result(4); }
+    completed.push(4); return result(5);
+  }
+  function rememberProgress(value, state) {
+    if (state) uiResume.state = state;
+    uiResume.progress = normalizeProgress(value) || (state ? inferProgress(state) : uiResume.progress);
+  }
+  function resumeConfig(automatic = false) {
+    if (!ui.alive || !uiResume.state) return;
+    if (automatic && (uiResume.autoUsed || uiResume.manual)) return;
+    uiResume.autoUsed = true;
+    const progress = uiResume.progress || inferProgress(uiResume.state);
+    const requested = running() ? ui.job.kind === 'prepare_role' ? 3 : 4 : progress.next_step;
+    // 页面按当前表单判断：未完成的步骤之后不能恢复，停在第一个未完成的步骤。
+    const reachable = firstIncompleteStep(); const step = Math.min(requested, reachable);
+    ui.step = step; showStep(step, !automatic);
+    const label = STEP_LABELS[step];
+    // 自动恢复时保留“恢复到第几步”，随后自动确认连接成功的提示会接在它后面，而不是覆盖它。
+    uiResume.note = automatic ? '已恢复到第' + step + '步：' + label + '。' : '';
+    message('已恢复到第' + step + '步：' + label + '。' + (running() && step === requested ? '后台任务仍在运行，请查看任务进度，不要重复提交。' : step < requested ? '这一步还没有完成：' + stepProblemText(step) + ' 完成后才能进入下一步。' : progress.message) + (progress.needs_revalidate ? ' 当前连接或资源仍需重新验证；加载与试听前请完成相应测试。' : ''));
+  }
+  function addOption(select, value, label) { const option = document.createElement('option'); option.value = value; option.textContent = label; select.append(option); return option; }
+  function weightFilename(path) { return path.split(/[\\/]/).pop() || path; }
+  function sourceKind(label) { const text = String(label || ''); const index = text.indexOf(' · '); return index > 0 ? text.slice(0, index) : text; }
+  function weightOptionLabel(item) { return [weightFilename(item.path), item.version && item.version !== 'unknown' ? item.version : '', sourceKind(item.label), item.path].filter(Boolean).join(' · '); }
+  function fillPicker(kind, current = $(PICKERS[kind].id).value) {
+    // 下拉框是唯一的权重输入：选项依次显示文件名、版本、来源和完整路径；已保存但未扫描到的路径保留为“已保存”选项。
+    const spec = PICKERS[kind]; const picker = $(spec.id); const known = new Set();
+    const items = ui.weights[kind].filter((item) => item && typeof item.path === 'string' && item.path && (kind !== 'lora-weights' || /\.pth$/i.test(item.path)));
+    picker.replaceChildren(); addOption(picker, '', items.length ? spec.choose : spec.none);
+    for (const item of items) { if (known.has(item.path)) continue; known.add(item.path); addOption(picker, item.path, weightOptionLabel(item)).title = item.path; }
+    if (current && !known.has(current)) addOption(picker, current, '已保存：' + weightFilename(current) + ' · ' + current).title = current;
+    picker.value = current;
+  }
+  function fillWeights(kind, values) {
+    ui.weights[kind] = values; fillPicker(kind);
+    if (kind === 'lora-weights') setText('lora-catalog-note', values.some((item) => item && typeof item.path === 'string' && /\.pth$/i.test(item.path)) ? '请选择与底模版本配套的 LoRA。' : '本机模型目录中未发现 LoRA。');
+  }
+  async function scanCatalog() {
+    const root = $('model-root').value; checkLength(root, 1024, '本机模型目录');
+    let result;
+    try { result = await query('catalog', {root}); }
+    catch (error) { if (ui.alive && $('model-root').value === root) { ui.catalogError = diagnostic(error); $('base-guide').open = true; update(); } throw error; }
+    if (!ui.alive) return;
+    if ($('model-root').value !== root) { setText('catalog-note', '目录在扫描期间已修改，旧扫描结果已忽略；请重新扫描当前目录。'); return; }
+    if (!result || !Array.isArray(result.base_models) || !Array.isArray(result.gpt_weights) || !Array.isArray(result.sovits_weights)) { ui.catalogError = '扫描结果格式不正确'; update(); throw new Error('扫描结果格式不正确，请重新扫描本机模型目录。'); }
+    ui.catalogError = ''; ui.catalog = result.base_models; fillWeights('gpt-weights', result.gpt_weights); fillWeights('sovits-weights', result.sovits_weights); fillWeights('lora-weights', Array.isArray(result.lora_weights) ? result.lora_weights : []);
+    const references = Array.isArray(result.reference_audios) ? result.reference_audios : [];
+    fillWeights('ref-audio', references); ui.refsDir = typeof result.reference_dir === 'string' ? result.reference_dir : '';
+    setText('refs-note', typeof result.reference_note === 'string' && result.reference_note ? result.reference_note : references.length ? '找到 ' + references.length + ' 个参考音频。' : '没有找到参考音频，请放入 GPT-SoVITS 目录下的 maibot_refs 后刷新。');
+    // 普通模式还没有可选的参考音频时，展开第三步的放置说明。
+    if (!references.length && ui.mode !== 'role') $('voice-guide').open = true;
+    // 目录里一个 SoVITS 权重都没有时，展开底模下载说明。
+    if (!result.sovits_weights.length) $('base-guide').open = true;
+    setText('catalog-note', result.note || '扫描完成，请选择 SoVITS 底模或完整权重。'); update();
+  }
+  function clearPollTimer() { if (ui.pollTimer !== null) clearTimeout(ui.pollTimer); ui.pollTimer = null; }
+  function schedulePoll() {
+    if (!ui.alive || !running() || ui.pollError || ui.pollTimer !== null || ui.polling) return;
+    const epoch = ui.jobEpoch;
+    ui.pollTimer = setTimeout(() => { ui.pollTimer = null; void pollJob(epoch); }, POLL_MS);
+  }
+  function validateJob(job) { if (!job || typeof job.id !== 'string' || !job.id || job.id.length > 64 || !['load_models', 'synthesize', 'prepare_role'].includes(job.kind) || !['running', 'success', 'error', 'cancelled'].includes(job.status)) throw new Error('后台任务状态格式不正确，请刷新状态。'); }
+  function renderJob() {
+    const job = ui.job; $('job-card').hidden = !job; if (!job) return;
+    const labels = {running:'正在进行',success:'已完成',error:'任务失败',cancelled:'已取消'};
+    setText('job-title', job.kind === 'load_models' ? '模型加载任务' : job.kind === 'prepare_role' ? '角色资源准备任务' : '语音试听任务');
+    badge('job-badge', 'job-label', labels[job.status], job.status === 'success' ? 'success' : job.status === 'error' ? 'error' : 'info');
+    setText('job-message', job.message || (job.status === 'running' ? '后台任务正在进行，请稍候…' : labels[job.status]));
+    setText('job-meta', job.status === 'running' ? '后台串行执行；请不要重复创建任务。' : [job.duration_seconds > 0 ? '音频时长 ' + Number(job.duration_seconds).toFixed(1) + ' 秒' : '', job.audio_bytes > 0 ? '音频 ' + (job.audio_bytes / 1024).toFixed(1) + ' 千字节' : ''].filter(Boolean).join(' · '));
+  }
+  async function finishJob(job, epoch) {
+    if (!ui.alive || epoch !== ui.jobEpoch) return;
+    clearPollTimer();
+    if (job.kind === 'prepare_role') {
+      if (job.status === 'success') {
+        await loadState(true, true);
+        const unchanged = ui.jobRoleKey === selectedRoleKey() && ui.jobRoleRevision === ui.roleRevision;
+        if (!unchanged) invalidateRole('准备期间角色或情绪已修改；旧角色配置不会视为当前选择已就绪，请重新读取。');
+        else { renderRoleStatus(); message(roleReady() ? '角色配置已读取，资源校验完成。请手动加载所选角色后再试听。' : '后台准备已结束，请检查角色资源状态后重新读取。', roleReady() ? 'success' : 'info'); }
+      } else { ui.roleReadyKey = ''; ui.roleStatus = {status:job.status, message:job.message || '角色准备未完成，请检查后重试。',profile:null}; renderRoleStatus(); message(ui.roleStatus.message, job.status === 'error' ? 'error' : 'info'); }
+    } else if (job.kind === 'load_models') {
+      if (job.status === 'success' && ui.jobSignature === signature() && ui.jobRevision === ui.signatureRevision) {
+        ui.loadedSignature = ui.jobSignature; ui.modelStatus = {status:'success',message:'当前权重已手动加载成功，可以保存声音参数并试听。'};
+        setText('model-message', ui.modelStatus.message); message('模型加载成功。请确认参考声音参数，再生成试听。', 'success');
+      } else {
+        ui.loadedSignature = ''; ui.modelStatus = {status:job.status === 'error' ? 'error' : 'idle', message: job.status === 'success' ? '后台加载已完成，但表单中的模型或地址已经修改；请保存并加载当前权重。' : job.message || '加载未完成，请检查后重试。'};
+        setText('model-message', ui.modelStatus.message); message(ui.modelStatus.message, job.status === 'error' ? 'error' : 'info');
+      }
+    } else if (job.status === 'success') {
+      if (ui.jobSignature !== signature() || ui.jobSettings !== JSON.stringify(modelValues()) || ui.jobParameters !== JSON.stringify(parameterValues())) { message('试听任务已完成，但模型或声音参数已修改；请使用当前设置重新生成试听。'); return; }
+      if (Number.isSafeInteger(job.audio_bytes) && job.audio_bytes > 0) await readAudio(job, epoch);
+      else message('试听任务已结束，但没有返回音频。请检查服务输出后重试。', 'error');
+    } else message(job.message || '试听任务未完成，请检查后重试。', job.status === 'error' ? 'error' : 'info');
+    if (job.kind === 'load_models' && ui.previewPending) await continuePreview(job);
+    update(); scheduleCheck();
+  }
+  async function pollJob(epoch) {
+    if (!ui.alive || ui.polling || !running() || epoch !== ui.jobEpoch) return;
+    ui.polling = true;
+    try {
+      const job = await query('job', {job_id: ui.job.id}); validateJob(job);
+      if (!ui.alive || epoch !== ui.jobEpoch) return;
+      if (job.id !== ui.job.id) throw new Error('任务标识不匹配，请刷新状态。');
+      ui.job = job; ui.pollError = false; renderJob();
+      if (job.status !== 'running') await finishJob(job, epoch);
+    } catch (error) {
+      if (ui.alive && epoch === ui.jobEpoch) { ui.pollError = true; message('进度查询暂时失败：' + diagnostic(error) + ' 后台任务不会因此取消，请点击“继续查询任务”。', 'error'); }
+    } finally { ui.polling = false; update(); schedulePoll(); }
+  }
+  async function attachJob(job, jobSignature, jobRevision, allowAudio = true, jobSettings = JSON.stringify(modelValues())) {
+    validateJob(job); if (!ui.job || ui.job.id !== job.id) ui.jobParameters = ui.parametersSaved; clearPollTimer(); ui.jobEpoch += 1; ui.job = job; ui.jobSignature = jobSignature; ui.jobRevision = jobRevision; ui.jobSettings = jobSettings; ui.pollError = false;
+    renderJob(); update();
+    if (job.status === 'running') schedulePoll();
+    else if (allowAudio) await finishJob(job, ui.jobEpoch);
+  }
+  function audioType(bytes) {
+    const prefix = String.fromCharCode(...bytes.subarray(0, 12));
+    if (prefix.startsWith('RIFF') && prefix.slice(8, 12) === 'WAVE') return {mime:'audio/wav',extension:'wav'};
+    if (prefix.startsWith('OggS')) return {mime:'audio/ogg',extension:'ogg'};
+    if (prefix.startsWith('fLaC')) return {mime:'audio/flac',extension:'flac'};
+    if (prefix.startsWith('ID3') || bytes[0] === 255 && (bytes[1] & 224) === 224) return {mime:'audio/mpeg',extension:'mp3'};
+    return {mime:'audio/wav',extension:'wav'};
+  }
+  async function readAudio(job, jobEpoch) {
+    if (!ui.alive || ui.audioReading || job.kind !== 'synthesize' || job.status !== 'success' || !Number.isSafeInteger(job.audio_bytes) || job.audio_bytes <= 0) return;
+    if (ui.audioJob === job.id && ui.audioUrl) return;
+    revokeAudio(); const audioEpoch = ui.audioEpoch; ui.audioReading = true; update();
+    try {
+      const limit = Math.min(ui.maxAudio, MAX_AUDIO_BYTES);
+      if (job.audio_bytes > limit) throw new Error('音频超过允许大小，请缩短测试文字。');
+      const chunks = []; let offset = 0; let total = null; let done = false;
+      while (!done) {
+        if (!ui.alive || audioEpoch !== ui.audioEpoch || jobEpoch !== ui.jobEpoch) return;
+        const block = await query('audio', {job_id: job.id, offset});
+        if (!ui.alive || audioEpoch !== ui.audioEpoch || jobEpoch !== ui.jobEpoch) return;
+        if (!block || typeof block.base64 !== 'string' || block.base64.length > 262144 || !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(block.base64) || typeof block.done !== 'boolean' || !Number.isSafeInteger(block.next_offset) || !Number.isSafeInteger(block.total_bytes)) throw new Error('音频分块格式不正确，已停止读取。');
+        if (block.total_bytes <= 0 || block.total_bytes > limit || block.total_bytes !== job.audio_bytes || total !== null && total !== block.total_bytes) throw new Error('音频总长度发生变化或超过限制，已停止读取。');
+        total = block.total_bytes;
+        const raw = atob(block.base64); const bytes = Uint8Array.from(raw, (char) => char.charCodeAt(0));
+        if (bytes.length === 0 || block.next_offset !== offset + bytes.byteLength || block.next_offset <= offset || block.next_offset > total || block.next_offset > MAX_AUDIO_BYTES || block.done !== (block.next_offset === total)) throw new Error('音频偏移量无效，已停止读取以避免重复请求。');
+        chunks.push(bytes); offset = block.next_offset; done = block.done;
+        message('正在读取试听音频：' + Math.round(offset / total * 100) + '%。');
+      }
+      if (!ui.alive || audioEpoch !== ui.audioEpoch || jobEpoch !== ui.jobEpoch) return;
+      const type = audioType(chunks[0]); const blob = new Blob(chunks, {type:type.mime});
+      if (blob.size !== total) throw new Error('音频长度校验失败，请重新读取。');
+      ui.audioUrl = URL.createObjectURL(blob); ui.audioJob = job.id;
+      $('audio-player').src = ui.audioUrl; $('download-audio').href = ui.audioUrl; $('download-audio').download = '麦麦语音试听.' + type.extension;
+      $('audio-block').hidden = false; setText('audio-meta', '音频大小 ' + (total / 1024).toFixed(1) + ' 千字节。请手动点击播放，也可以下载。');
+      message('试听音频已准备好，请手动点击播放器试听。', 'success');
+    } catch (error) { if (ui.alive && audioEpoch === ui.audioEpoch) { ui.audioError = true; message('音频读取失败：' + diagnostic(error), 'error'); } }
+    finally { ui.audioReading = false; update(); }
+  }
+  function fillForm(config) {
+    const api = config.api; const models = config.models; const voice = config.voice;
+    const role = config.role || {}; ui.mode = role.mode === 'role' ? 'role' : 'original'; ui.roleSelectionDirty = false;
+    fillRoles(typeof role.role_id === 'string' ? role.role_id : '', typeof role.emotion === 'string' ? role.emotion : '', Array.isArray(role.emotions) ? role.emotions : role.emotion ? [role.emotion] : []);
+    $('role-data-dir').value = ui.rolesDataDir; // 角色目录只来自 roles 查询结果。
+    $('base-url').value = typeof api.base_url === 'string' ? api.base_url : '';
+    $('api-timeout').value = Number.isFinite(api.timeout) ? String(api.timeout) : '180';
+    $('model-root').value = typeof models.root === 'string' ? models.root : '';
+    ui.savedBase = {base_model: typeof models.base_model === 'string' && models.base_model.trim() ? models.base_model.trim() : 'custom', sovits_weights: realPath(models.sovits_weights)};
+    fillPicker('sovits-weights', ui.savedBase.sovits_weights); fillPicker('gpt-weights', realPath(models.gpt_weights)); fillPicker('lora-weights', realPath(models.lora_weights));
+    fillPicker('ref-audio', typeof voice.ref_audio_path === 'string' ? voice.ref_audio_path.trim() : '');
+    for (const [id, key] of [['prompt-text','prompt_text'],['prompt-lang','prompt_lang'],['text-lang','text_lang']]) $(id).value = typeof voice[key] === 'string' ? voice[key] : '';
+    ui.apiSaved = JSON.stringify(apiValues()); ui.baseSaved = JSON.stringify(baseValues()); ui.modelsSaved = JSON.stringify(modelValues());
+  }
+  async function loadState(initial, preserveRoleEdits = false) {
+    const hadState = ui.hasState;
+    const formBeforeRequest = JSON.stringify([apiValues(),modelValues()]);
+    const state = await query('state', {});
+    if (!state || !state.config || !state.config.api || !state.config.models || !state.config.voice || !state.connection || !state.model_status) throw new Error('设置状态格式不正确，请检查插件版本并重试。');
+    if (!ui.alive) return;
+    const preserveSelection = preserveRoleEdits && (ui.jobRoleRevision !== ui.roleRevision || ui.jobRoleKey !== selectedRoleKey());
+    const selection = preserveSelection ? {role_id:$('role-picker').value, emotion:$('emotion-picker').value, emotions:enabledEmotions()} : null;
+    const formEditedInFlight = formBeforeRequest !== JSON.stringify([apiValues(),modelValues()]);
+    const keepParameterEdits = ui.parametersInitialized && ui.parametersSaved !== JSON.stringify(parameterValues());
+    if (!ui.hasState || initial && !formEditedInFlight) { fillForm(state.config); ui.hasState = true; }
+    rememberProgress(state.progress, state);
+    if (!ui.parametersInitialized || initial && !keepParameterEdits) fillParameters(state.config);
+    if (!ui.autoInitialized || initial && !autoDirty()) fillAuto(state.config);
+    if (!ui.judgeInitialized || initial && !judgeDirty()) fillJudge(state.config);
+    ui.emotionJudge = state.emotion_judge && typeof state.emotion_judge === 'object' ? state.emotion_judge : {};
+    ui.autoStats = state.auto_stats && typeof state.auto_stats === 'object' ? state.auto_stats : {};
+    if (selection) { $('role-picker').value = selection.role_id; fillEmotions(selection.emotion, selection.emotions); ui.roleSelectionDirty = true; }
+    const serverApi = {base_url: state.config.api.base_url, timeout: state.config.api.timeout};
+    const serverModels = {...state.config.models, ...state.config.voice};
+    ui.preparedEmotions = Array.isArray(state.config.role && state.config.role.emotions) ? state.config.role.emotions : state.config.role && state.config.role.emotion ? [state.config.role.emotion] : [];
+    ui.roleStatus = state.role_status || {status:'idle',message:'请选择角色与情绪，再读取角色配置。',profile:null}; renderRoleStatus();
+    ui.enabled = !state.config.plugin || state.config.plugin.enabled !== false;
+    ui.connection = state.connection; ui.modelStatus = state.model_status;
+    ui.verifiedApi = state.connection.status === 'success' && (!state.connection.checked_url || state.connection.checked_url === serverApi.base_url.replace(/\/+$/, '')) && JSON.stringify(serverApi) === JSON.stringify(apiValues()) ? JSON.stringify(serverApi) : '';
+    ui.loadedSignature = state.model_status.status === 'success' && signature(serverApi, serverModels) === signature() ? signature() : '';
+    setText('connection-message', state.connection.message || (apiReady() ? '接口测试成功。' : '请保存并测试当前接口。'));
+    setText('model-message', state.model_status.message || (modelReady() ? '当前模型已加载。' : '请先手动加载模型。'));
+    ui.maxAudio = Number.isSafeInteger(state.config.api.max_audio_bytes) && state.config.api.max_audio_bytes > 0 ? Math.min(state.config.api.max_audio_bytes, MAX_AUDIO_BYTES) : MAX_AUDIO_BYTES;
+    ui.needsRefresh = false;
+    if (state.job && state.job.kind === 'prepare_role' && state.job.status === 'running' && (!ui.job || ui.job.id !== state.job.id)) { ui.jobRoleKey = selectedRoleKey(); ui.jobRoleRevision = ui.roleRevision; ui.roleReadyKey = ''; }
+    if (state.job) await attachJob(state.job, signature(serverApi, serverModels), ui.signatureRevision, state.job.kind === 'synthesize' && ui.modelsSaved === JSON.stringify(modelValues()), ui.modelsSaved);
+    else { clearPollTimer(); ui.jobEpoch += 1; ui.job = null; ui.pollError = false; renderJob(); }
+    update();
+    if (!initial && !hadState) { await scanCatalog(); await refreshRoles(); }
+  }
+  async function startJob(kind, text, models, revision) {
+    if (!ui.alive) return;
+    const jobSignature = signature(apiValues(), models);
+    if (kind === 'load_models') { ui.loadedSignature = ''; ui.modelStatus = {status:'running',message:'模型正在后台加载…'}; setText('model-message', ui.modelStatus.message); }
+    revokeAudio();
+    let result;
+    try { result = await action('start_job', {kind, text}); }
+    catch (error) { ui.needsRefresh = true; throw new Error('未能确认任务是否启动，请先刷新状态；不要重复创建任务。' + diagnostic(error)); }
+    if (!result.job) { ui.needsRefresh = true; throw new Error('服务未返回任务标识，请刷新状态确认后台任务。'); }
+    await attachJob(result.job, jobSignature, revision, true, JSON.stringify(models));
+    if (result.job.status === 'running') message(result.message || '后台任务已开始，可在下方查看进度。');
+  }
+  function selectedRole() { return ui.roles.find((role) => role.id === $('role-picker').value); }
+  function selectedEmotion() { const role = selectedRole(); return role && ui.enabledEmotions.includes($('emotion-picker').value) && role.emotions.find((emotion) => emotion.id === $('emotion-picker').value); }
+  function fillDefaultEmotion(current = '') {
+    const select = $('emotion-picker'); const role = selectedRole(); select.replaceChildren();
+    for (const emotion of role ? role.emotions : []) if (ui.enabledEmotions.includes(emotion.id)) addOption(select, emotion.id, String(emotion.label || emotion.id));
+    if (!select.options.length) addOption(select, '', '请至少勾选一个情感');
+    select.value = ui.enabledEmotions.includes(current) ? current : (select.options[0] && select.options[0].value) || '';
+  }
+  function fillEmotions(current = '', enabled) {
+    const role = selectedRole(); const container = $('emotion-options'); container.replaceChildren(); ui.emotionChecks = [];
+    const requested = Array.isArray(enabled) ? enabled : current ? [current] : role && role.emotions[0] ? [role.emotions[0].id] : [];
+    ui.enabledEmotions = [...new Set(requested)].filter((id) => typeof id === 'string' && (!role || role.emotions.some((emotion) => emotion.id === id)));
+    for (const [index,emotion] of (role ? role.emotions : []).entries()) {
+      const label = document.createElement('label'); const checkbox = document.createElement('input'); const text = document.createElement('span');
+      checkbox.type = 'checkbox'; checkbox.id = 'enabled-emotion-' + index; checkbox.value = emotion.id; checkbox.checked = ui.enabledEmotions.includes(emotion.id); checkbox.setAttribute('aria-describedby', 'emotion-options-help'); label.setAttribute('for', checkbox.id);
+      text.textContent = String(emotion.label || emotion.id); label.append(checkbox); label.append(text); container.append(label); ui.emotionChecks.push(checkbox);
+      checkbox.addEventListener('change', () => { ui.enabledEmotions = ui.emotionChecks.filter((item) => item.checked).map((item) => item.value); fillDefaultEmotion($('emotion-picker').value); invalidateRole(ui.enabledEmotions.length > 50 ? '最多同时启用 50 个情感，请减少勾选。' : '启用情感已改变，请重新读取角色配置。'); });
+    }
+    fillDefaultEmotion(current);
+    if (!role && current) { $('emotion-picker').replaceChildren(); addOption($('emotion-picker'), current, '已保存情感：' + current); $('emotion-picker').value = current; }
+  }
+  function fillRoles(current = $('role-picker').value, emotion = $('emotion-picker').value, enabled = enabledEmotions()) {
+    const select = $('role-picker'); select.replaceChildren();
+    for (const role of ui.roles) addOption(select, role.id, String(role.name || role.id));
+    if (current && !ui.roles.some((role) => role.id === current)) addOption(select, current, '已保存角色（未找到）：' + current);
+    if (!select.options.length) addOption(select, '', '未找到角色，请检查扫描目录并刷新列表');
+    select.value = current || (ui.roles[0] && ui.roles[0].id) || ''; fillEmotions(emotion, enabled.length ? enabled : undefined);
+  }
+  function renderRoleStatus() {
+    const status = ui.roleStatus; const profile = status && status.profile;
+    const prepared = Array.isArray(status && status.emotions) ? status.emotions : ui.preparedEmotions;
+    const preparedSet = [...new Set(prepared)].sort(); const selected = enabledEmotions();
+    const profiles = status && status.profiles;
+    const complete = selected.every((emotion) => { const item = profiles && profiles[emotion] || (profile && profile.emotion === emotion ? profile : null); return item && item.role_id === $('role-picker').value && item.emotion === emotion; });
+    const matches = profile && selectedRole() && selectedEmotion() && profile.role_id === $('role-picker').value && profile.emotion === $('emotion-picker').value && JSON.stringify(preparedSet) === JSON.stringify(selected) && complete;
+    ui.roleReadyKey = !ui.roleSelectionDirty && matches && ['success','ready'].includes(status.status) ? selectedRoleKey() : '';
+    const lines = [ui.roleSelectionDirty && !['running','error','cancelled'].includes(status && status.status) ? '角色或情感已改变，请重新读取角色配置。' : String(status && status.message || '请选择角色与情感，再读取角色配置。')];
+    if (matches && !ui.roleSelectionDirty) {
+      lines.push('角色：' + String(profile.role_name || profile.role_id) + ' · 默认情感：' + String(profile.emotion_label || profile.emotion));
+      lines.push('已启用情感：' + selected.join('、') + '。工具合成可指定其中任意情感。');
+      for (const asset of Array.isArray(profile.assets) ? profile.assets : []) lines.push(String(asset.kind || '资源') + '：' + String(asset.path || '') + ' · ' + String(asset.size ?? '未知') + ' 字节 · SHA256 ' + String(asset.sha256 || '未提供') + ' · ' + (asset.reused ? '已校验并复用' : '已准备/校验'));
+      for (const warning of Array.isArray(profile.warnings) ? profile.warnings : []) lines.push('提示：' + String(warning));
+    }
+    setText('role-status', lines.join('\n')); $('role-status').dataset.tone = roleReady() ? 'success' : status && status.status === 'error' ? 'error' : 'info';
+    $('role-ref-text').value = matches && !ui.roleSelectionDirty && profile.voice && typeof profile.voice.prompt_text === 'string' ? profile.voice.prompt_text : '';
+  }
+  function invalidateRole(text = '角色或情感已改变，请重新读取角色配置。') {
+    ui.roleRevision += 1; ui.roleSelectionDirty = true; ui.roleReadyKey = ''; ui.loadedSignature = ''; ui.signatureRevision += 1; revokeAudio(); renderRoleStatus(); setText('role-status', text); update();
+  }
+  async function refreshRoles() {
+    let result;
+    try { result = await query('roles', {}); }
+    catch (error) { setText('roles-note', '角色扫描失败：' + diagnostic(error) + ' 角色目录：' + (ui.rolesDataDir || 'GPT-SoVITS 目录下的 maibot_roles（尚未收到实际路径）') + '。请将角色配置放在 maibot_roles/角色/role.json 后刷新角色列表。'); throw error; }
+    if (!result || !Array.isArray(result.roles) || !Array.isArray(result.errors)) throw new Error('角色列表格式不正确，请检查插件版本后重试。');
+    if (!ui.alive) return;
+    const previous = selectedRoleKey();
+    ui.roles = result.roles.filter((role) => role && typeof role.id === 'string' && role.id && Array.isArray(role.emotions)).map((role) => ({...role, emotions:role.emotions.filter((emotion) => emotion && typeof emotion.id === 'string' && emotion.id)}));
+    fillRoles();
+    if (previous !== selectedRoleKey() || !selectedRole()) { ui.roleReadyKey = ''; ui.roleSelectionDirty = true; if (ui.mode === 'role') ui.loadedSignature = ''; }
+    const errors = result.errors.map((error) => typeof error === 'string' ? error : String(error && error.message || JSON.stringify(error)));
+    const scanned = Array.isArray(result.scanned_paths) ? result.scanned_paths.map(String) : [];
+    const actual = typeof result.data_dir === 'string' ? result.data_dir : ui.rolesDataDir;
+    ui.rolesDataDir = actual; $('role-data-dir').value = actual;
+    setText('roles-note', (ui.roles.length ? '找到 ' + ui.roles.length + ' 个角色。' : '未找到角色 JSON。请把角色文件夹放到 GPT-SoVITS 安装目录下的 maibot_roles 文件夹，配置文件为 maibot_roles/角色/role.json（模型与参考音频放在同一角色目录）后点击“刷新角色列表”。') + ' 实际目录：' + (actual || '后台未返回') + '；扫描路径：' + (scanned.join('；') || actual || '后台未返回') + (errors.length ? '；扫描/配置错误：' + errors.join('；') : ''));
+    if (!ui.roles.length && ui.mode === 'role') $('voice-guide').open = true;
+    $('roles-note').dataset.tone = errors.length || !ui.roles.length ? 'error' : 'info'; renderRoleStatus(); update();
+  }
+  async function switchMode(mode) {
+    uiResume.manual = true; uiResume.autoUsed = true;
+    await action('set_mode', {mode}); ui.loadedSignature = ''; ui.signatureRevision += 1; revokeAudio();
+    await loadState(true); ui.step = 3; update(); if (mode === 'role') void loadLlmTasks(); message(mode === 'role' ? '已切换角色模式；请选择角色并读取 JSON 配置，不会自动加载模型。' : '已切换普通模式，已回读后台保存的手工配置；不会自动加载模型。');
+  }
+  async function prepareRole() {
+    const role = selectedRole(); const emotion = selectedEmotion(); const emotions = enabledEmotions(); if (!role || !emotion || !emotions.length || emotions.length > 50 || !emotions.includes(emotion.id)) throw new Error('请选择有效角色、1～50 个启用情感及其中一个默认试听情感。');
+    ui.jobRoleKey = selectedRoleKey(); ui.jobRoleRevision = ui.roleRevision; ui.roleReadyKey = ''; ui.loadedSignature = ''; ui.roleSelectionDirty = true; revokeAudio();
+    ui.roleStatus = {status:'running',message:'正在后台读取 JSON、校验资源并准备所选角色…',profile:null}; renderRoleStatus(); setText('role-status', ui.roleStatus.message);
+    let result; try { result = await action('prepare_role', {role_id:role.id, emotion:emotion.id, emotions}); } catch (error) { ui.needsRefresh = true; throw new Error('未能确认角色准备是否启动，请刷新状态确认，不要重复提交。' + diagnostic(error)); }
+    if (!result.job || result.job.kind !== 'prepare_role') { ui.needsRefresh = true; throw new Error('未返回角色准备任务，请刷新状态确认。'); }
+    await attachJob(result.job, signature(), ui.signatureRevision); if (result.job.status === 'running') message(result.message || '角色资源正在后台准备，可查看任务进度。');
+  }
+  function issueStep(issue) {
+    if (Number.isInteger(issue.step) && issue.step >= 1 && issue.step <= LAST_STEP) return issue.step;
+    const field = String(issue.field || '');
+    if (/^(api|plugin)(\.|$)/.test(field)) return 1;
+    if (/^models\.(root|base_model|sovits_weights)$/.test(field)) return 2;
+    if (/^role(\.|$)|^models\.(gpt_weights|lora_weights)$/.test(field)) return 3;
+    if (/^voice\.(ref_audio_path|prompt_text|prompt_lang|text_lang|aux_ref_audio_paths)$/.test(field)) return 3;
+    if (/^voice\./.test(field)) return 4;
+    if (field === 'models') return 4;
+    if (/^auto_voice/.test(field)) return 5;
+    return ui.step;
+  }
+  function checkIssueItem(issue) {
+    const step = issueStep(issue); const problem = issue.level === 'error' || issue.level === 'warning';
+    const item = document.createElement('li'); const button = document.createElement('button'); const title = document.createElement('span'); const text = document.createElement('span');
+    button.type = 'button'; button.className = 'step-status check-issue'; button.dataset.tone = problem ? 'error' : 'success'; button.dataset.step = String(step); button.title = '点击前往第' + step + '步';
+    title.className = 'step-status-title'; title.textContent = STEP_TITLES[step] + ' · ' + (ISSUE_LEVELS[issue.level] || '说明');
+    text.className = 'step-status-text'; text.textContent = String(issue.message || '请检查配置。');
+    button.append(title); button.append(text); button.addEventListener('click', () => { if (!ui.busy && !ui.initializing) showStep(step); });
+    item.append(button); return item;
+  }
+  async function checkConfig() {
+    if (ui.checking || !ui.sdk || !ui.alive) return; ui.checking = true; autoCheck.pending = false;
+    $('check-config-result').setAttribute('aria-busy', 'true'); if (!ui.checkResult) { setText('check-config-message','正在检查已保存配置…'); $('check-config-result').dataset.tone = 'info'; } update();
+    try {
+      const result = await query('check_config', {});
+      if (!ui.alive) return;
+      if (!result || typeof result.success !== 'boolean' || typeof result.ready !== 'boolean' || !Array.isArray(result.issues) || !result.summary || typeof result.summary !== 'object') throw new Error('配置检查返回格式不正确，请检查插件版本后重试。');
+      ui.checkResult = result; const summary = result.summary;
+      rememberProgress(normalizeProgress(result.progress) || normalizeProgress({next_step:result.next_step, message:result.message}));
+      const issues = result.issues.filter((issue) => issue && typeof issue === 'object');
+      const problems = issues.filter((issue) => issue.level === 'error' || issue.level === 'warning');
+      setText('check-config-message', problems.length ? '发现 ' + problems.length + ' 个问题，点击下方红色条目前往所在步骤处理。' : '已保存配置检查通过，没有发现问题。');
+      $('check-config-result').dataset.tone = problems.length ? 'error' : 'success';
+      setText('check-config-summary', ['模式：' + (summary.mode === 'role' ? '角色模式' : '普通模式'), '底模：' + String(summary.base_model || '未设置'), '角色：' + String(summary.role_id || '未选择') + ' · 默认情感：' + String(summary.emotion || '未设置'), '已启用情感：' + (Array.isArray(summary.emotions) ? summary.emotions.map(String).join('、') || '无' : '无'), '接口：' + String(summary.api_url || '未设置')].join('\n'));
+      $('check-config-issues').replaceChildren(...problems.concat(issues.filter((issue) => !problems.includes(issue))).map(checkIssueItem));
+    } catch (error) { ui.checkResult = null; setText('check-config-message','配置检查失败：' + diagnostic(error)); $('check-config-result').dataset.tone = 'error'; $('check-config-summary').textContent = ''; $('check-config-issues').replaceChildren(); }
+    finally { ui.checking = false; $('check-config-result').setAttribute('aria-busy', 'false'); update(); if (autoCheck.pending && ui.alive) { autoCheck.pending = false; void checkConfig(); } }
+  }
+  function savedApiKey() {
+    const api = uiResume.state && uiResume.state.config && uiResume.state.config.api;
+    return api ? JSON.stringify({base_url:api.base_url,timeout:api.timeout}) : '';
+  }
+  function savedConnectionConfigured() {
+    // Only explicit backend progress counts. Old/no-progress and fresh default states stay conservative.
+    const progress = uiResume.state && uiResume.state.progress;
+    return Boolean(progress && (Array.isArray(progress.completed_steps) && progress.completed_steps.includes(1) || progress.markers && progress.markers['1'] || Number.isInteger(progress.next_step) && progress.next_step >= 2 && progress.next_step <= LAST_STEP));
+  }
+  function canEnsureConnection() { return Boolean(ui.enabled && savedConnectionConfigured() && savedApiKey() === JSON.stringify(apiValues()) && !running()); }
+  function ensureConnection(retry = false) {
+    if (connectionEnsure.promise) return connectionEnsure.promise;
+    const key = savedApiKey();
+    if (!ui.alive || ui.busy && ui.busy !== 'preview-run' || !canEnsureConnection() || apiReady() || !retry && connectionEnsure.attempted.has(key)) return Promise.resolve(apiReady());
+    connectionEnsure.attempted.add(key); connectionEnsure.error = '';
+    ui.verifiedApi = ''; ui.connection = {status:'running',message:'正在自动确认连接…'};
+    setText('connection-message',ui.connection.message); message(ui.connection.message);
+    const work = async () => {
+      try {
+        const result = await query('ensure_connection', {});
+        if (!ui.alive || key !== savedApiKey() || key !== JSON.stringify(apiValues())) return false;
+        if (!result || result.success !== true || !result.connection || result.connection.status !== 'success') throw new Error(result && result.message || '服务没有确认连接，请检查已保存的接口地址。');
+        const checked = result.connection.checked_url;
+        if (checked && checked !== JSON.parse(key).base_url.replace(/\/+$/, '')) throw new Error('接口地址已改变，旧连接结果已忽略，请重试。');
+        // Read state without fillForm: in-flight edits (including parameters) must survive.
+        await loadState(false);
+        if (!ui.alive || key !== savedApiKey() || key !== JSON.stringify(apiValues())) return false;
+        ui.connection = result.connection; ui.verifiedApi = key;
+        setText('connection-message',ui.connection.message); message((uiResume.note && !uiResume.manual ? uiResume.note + ' ' : '') + '已自动确认保存的接口连接，可以继续配置或试听；尚未自动加载模型。','success');
+        return true;
+      } catch (error) {
+        if (!ui.alive || key !== savedApiKey() || key !== JSON.stringify(apiValues())) return false;
+        connectionEnsure.error = '自动确认连接失败：' + diagnostic(error);
+        ui.verifiedApi = ''; ui.connection = {status:'error',message:connectionEnsure.error};
+        setText('connection-message',ui.connection.message); message(connectionEnsure.error + ' 可点击“重试自动确认连接”，或使用第一步保存并测试。','error');
+        return false;
+      } finally { connectionEnsure.promise = null; update(); scheduleCheck(); }
+    };
+    connectionEnsure.promise = work(); update(); return connectionEnsure.promise;
+  }
+  function previewSnapshot() { return JSON.stringify([signature(), ui.signatureRevision, ui.mode, ui.roleRevision, selectedRoleKey(), modelValues(), parameterValues(), $('test-text').value]); }
+  async function runPreview() {
+    if (running()) throw new Error('请等待当前任务结束后再生成试听。');
+    if (!apiReady() && canEnsureConnection()) await ensureConnection(true);
+    if (!apiReady()) throw new Error(connectionEnsure.error || '请先在第一步测试接口连接。');
+    if (ui.mode === 'role' && !roleReady()) { showStep(3); throw new Error('请先在第三步读取当前角色与情感的配置，再生成试听。'); }
+    const text = $('test-text').value; if (!text.trim() || Array.from(text).length > 300) throw new Error('请填写 1～300 字的测试文字。');
+    const snapshot = previewSnapshot(); const models = modelValues(); const revision = ui.signatureRevision;
+    validateParameters(parameterValues());
+    if (ui.parametersSaved !== JSON.stringify(parameterValues())) await saveParameters();
+    if (ui.mode === 'original') await saveModels(models,true,true);
+    if (snapshot !== previewSnapshot() || !apiReady() || ui.mode === 'role' && !roleReady()) throw new Error('保存期间配置已改变，请确认当前设置后重新试听。');
+    if (ui.step !== 4) showStep(4);
+    if (modelReady()) await startJob('synthesize',text,models,revision);
+    else { ui.previewPending = {snapshot,text,models,revision}; try { await startJob('load_models','',models,revision); } catch (error) { ui.previewPending = null; throw error; } }
+  }
+  async function continuePreview(job) {
+    const pending = ui.previewPending; ui.previewPending = null;
+    if (job.status !== 'success' || !modelReady()) { message('模型加载未成功，已停止自动试听；请检查后台任务后重试。',job.status === 'error' ? 'error' : 'info'); return; }
+    if (pending.snapshot !== previewSnapshot() || !apiReady() || ui.mode === 'role' && !roleReady()) { message('加载期间配置或测试文字已改变，已停止自动试听；请确认设置后重新生成。'); return; }
+    try { await startJob('synthesize',pending.text,pending.models,pending.revision); } catch (error) { message('自动试听未启动：' + diagnostic(error),'error'); }
+  }
+  $('retry-connection').addEventListener('click', () => void ensureConnection(true));
+  $('check-config').addEventListener('click', () => void checkConfig());
+  $('resume-config').addEventListener('click', () => resumeConfig());
+  $('save-parameters').addEventListener('click', () => void operate('save-parameters', async () => {
+    validateParameters(parameterValues());
+    const result = await saveParameters(); message(result.message || '生成参数已保存；没有加载模型，也未发送 QQ 消息。','success');
+  }));
+  $('save-auto').addEventListener('click', () => void operate('save-auto', async () => { const result = await autoSave(); message(result.message || '自动语音设置已保存；未发送 QQ 消息，也未合成语音。','success'); }));
+  $('auto-form').addEventListener('submit', event => event.preventDefault());
+  for (const id of Object.keys(AUTO_FIELDS)) { $(id).addEventListener('input',autoEdited); $(id).addEventListener('change',autoEdited); }
+  for (const id of ['step-auto','next-auto']) $(id).addEventListener('click', () => showStep(5));
+  $('auto-back').addEventListener('click', () => showStep(4));
+  $('llm-emotion').addEventListener('change', update); $('llm-task').addEventListener('change', update);
+  $('refresh-llm-tasks').addEventListener('click', () => void operate('refresh-llm-tasks', async () => { const count = await loadLlmTasks(true); message('已读取 MaiBot 的 ' + count + ' 个模型任务。', 'success'); }));
+  $('save-emotion-judge').addEventListener('click', () => void operate('save-emotion-judge', async () => { const result = await saveEmotionJudge(); message(result.message || '情感判断设置已保存。', 'success'); }));
+  $('test-emotion').addEventListener('click', () => void operate('test-emotion', async () => {
+    const text = $('emotion-test-text').value.trim(); if (!text) throw new Error('请输入要试判断的文字。'); checkLength(text, 300, '试判断文字');
+    if (judgeDirty()) await saveEmotionJudge();
+    setText('emotion-test-result', '正在请求 MaiBot 的 LLM 判断…'); $('emotion-test-result').dataset.tone = 'info';
+    try { const result = await action('test_emotion', {text}); setText('emotion-test-result', String(result.message || '判断结果：' + emotionName(String(result.emotion || '')))); $('emotion-test-result').dataset.tone = 'success'; message('情感试判断完成，未合成语音。', 'success'); }
+    catch (error) { setText('emotion-test-result', '试判断失败：' + diagnostic(error)); $('emotion-test-result').dataset.tone = 'error'; throw error; }
+  }));
+  $('parameters-form').addEventListener('submit', (event) => event.preventDefault());
+  for (const id of Object.keys(PARAM_FIELDS)) { $(id).addEventListener('input',parameterEdited); $(id).addEventListener('change',parameterEdited); }
+  $('preview-run').addEventListener('click', () => void operate('preview-run',runPreview));
+  for (const mode of ['role','original']) $(mode + '-mode-btn').addEventListener('keydown', (event) => { if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return; event.preventDefault(); const next = event.key === 'Home' ? 'role' : event.key === 'End' ? 'original' : mode === 'role' ? 'original' : 'role'; const tab = $(next + '-mode-btn'); if (!tab.disabled) { tab.focus(); tab.click(); } });
+  $('role-mode-btn').addEventListener('click', () => void operate('set-mode', () => switchMode('role')));
+  $('original-mode-btn').addEventListener('click', () => void operate('set-mode', () => switchMode('original')));
+  $('role-picker').addEventListener('change', () => { uiResume.manual = true; fillEmotions(); invalidateRole(); });
+  $('emotion-picker').addEventListener('change', () => { uiResume.manual = true; invalidateRole(); });
+  $('refresh-roles').addEventListener('click', () => void operate('refresh-roles', refreshRoles));
+  $('apply-role').addEventListener('click', () => void operate('apply-role', prepareRole));
+  $('role-back-step').addEventListener('click', () => showStep(2));
+  $('role-load-models').addEventListener('click', () => { if (!roleReady() || $('role-load-models').disabled) return; $('load-models').click(); });
+  $('role-synthesize').addEventListener('click', () => { if (!roleReady() || $('role-synthesize').disabled) return; $('synthesize').click(); });
+  for (const id of API_FIELDS.concat(TEXT_MODEL_FIELDS)) $(id).addEventListener('input', edited);
+  for (const id of WEIGHT_PICKERS.concat([REF_PICKER])) $(id).addEventListener('change', edited);
+  $('test-text').addEventListener('input', update);
+  $('step-api').addEventListener('click', () => showStep(1)); $('base-back-step').addEventListener('click', () => showStep(1)); $('back-step').addEventListener('click', () => showStep(2));
+  $('step-base').addEventListener('click', () => showStep(2)); $('step-models').addEventListener('click', () => showStep(3));
+  for (const id of ['step-parameters','next-parameters']) $(id).addEventListener('click', () => showStep(4));
+  $('parameters-back').addEventListener('click', () => showStep(3));
+  $('save-base').addEventListener('click', () => void operate('save-base', saveBase));
+  $('refresh-role-dir').addEventListener('click', () => void operate('refresh-role-dir', refreshRoles));
+  $('next-step').addEventListener('click', () => showStep(2));
+  for (const step of [1, 2, 3, 4, 5]) $('status-step-' + step).addEventListener('click', () => showStep(step));
+  $('dismiss-operation-error').addEventListener('click', clearOperationError);
+  $('test-api').addEventListener('click', () => void operate('test-api', async () => {
+    ui.verifiedApi = ''; const values = apiValues(); await saveApi(values);
+    ui.connection = {status:'running',message:'正在测试已保存的接口…'}; setText('connection-message', ui.connection.message); update();
+    try { const result = await action('test_api', {});
+      if (JSON.stringify(values) === JSON.stringify(apiValues())) { ui.verifiedApi = JSON.stringify(values); ui.connection = {status:'success',message:result.message || '接口测试成功。'}; message('接口连接成功，可以进入第二步。', 'success'); }
+      else { ui.connection = {status:'idle',message:'测试期间接口设置已修改，请重新保存并测试。'}; message(ui.connection.message); }
+    } catch (error) { ui.connection = {status:'error',message:'接口测试失败：' + diagnostic(error)}; $('deploy-guide').open = true; throw error; }
+    finally { setText('connection-message', ui.connection.message); }
+  }));
+  $('save-models').addEventListener('click', () => void operate('save-models', async () => { const result = await saveModels(modelValues()); message(result.message || '模型与声音参数已保存；没有加载模型。', 'success'); }));
+  $('scan-models').addEventListener('click', () => void operate('scan-models', scanCatalog));
+  $('refresh-refs').addEventListener('click', () => void operate('refresh-refs', async () => { await scanCatalog(); message('已重新扫描 GPT-SoVITS 目录下的 maibot_refs。', 'success'); }));
+  $('load-models').addEventListener('click', () => void operate('load-models', async () => {
+    if (ui.mode === 'role' && !roleReady()) throw new Error('请先读取当前角色与情绪的配置。');
+    if (!apiReady()) throw new Error('请先测试接口连接。'); const models = modelValues(); const revision = ui.signatureRevision; if (ui.mode === 'original') await saveModels(models, true);
+    if (signature(apiValues(), models) !== signature() || revision !== ui.signatureRevision || !apiReady()) throw new Error('保存期间模型或接口已修改，请检查当前表单后重新加载。');
+    await startJob('load_models', '', models, revision);
+  }));
+  $('synthesize').addEventListener('click', () => void operate('synthesize', async () => {
+    if (!apiReady() || !modelReady()) throw new Error('请先测试接口，并手动加载当前模型成功后再试听。');
+    const text = $('test-text').value; if (!text.trim() || Array.from(text).length > 300) throw new Error('请填写 1～300 字的测试文字。');
+    const models = modelValues(); const revision = ui.signatureRevision; const parameters = JSON.stringify(parameterValues());
+    if (ui.parametersSaved !== parameters) await saveParameters();
+    if (ui.mode === 'original') await saveModels(models, true, true);
+    if (parameters !== JSON.stringify(parameterValues())) throw new Error('保存期间生成参数已改变，请重新生成试听。');
+    if (revision !== ui.signatureRevision || !apiReady() || !modelReady()) throw new Error('保存期间权重或接口已修改，请先手动加载当前模型。');
+    await startJob('synthesize', text, models, revision);
+  }));
+  $('refresh-state').addEventListener('click', () => void operate('refresh-state', async () => { await loadState(false); if (!ui.audioUrl && !running()) message('状态已刷新；未覆盖你正在编辑的内容。'); }));
+  $('cancel-job').addEventListener('click', () => void operate('cancel-job', async () => { if (!running()) return; const jobId = ui.job.id; ui.previewPending = null; const result = await action('cancel_job', {job_id:jobId}); message(result.message || '已请求取消后台任务，请等待任务状态更新。'); ui.pollError = false; schedulePoll(); }));
+  $('retry-job').addEventListener('click', () => { ui.pollError = false; schedulePoll(); update(); });
+  $('retry-audio').addEventListener('click', () => { if (ui.job && !ui.busy) void readAudio(ui.job, ui.jobEpoch); });
+  function dispose() { if (!ui.alive) return; ui.previewPending = null; ui.alive = false; closeQueuedRequests(); clearPollTimer(); clearTimeout(ui.readyTimer); ui.readyTimer = null; ui.jobEpoch += 1; revokeAudio(); }
+  window.addEventListener('pagehide', dispose); window.addEventListener('beforeunload', dispose); window.addEventListener('maibot:unload', dispose);
+  window.addEventListener('maibot:context', () => { document.documentElement.lang = 'zh-CN'; });
+  async function boot() {
+    const sdk = window.maibot;
+    if (!sdk || !sdk.ready || typeof sdk.query !== 'function' || typeof sdk.action !== 'function') { ui.initializing = false; message('请在 MaiBot 内打开此设置页。当前环境没有页面桥接，不能读取或保存配置。', 'error'); update(); return; }
+    fillForm({api:{timeout:180}, models:{}, voice:{prompt_lang:'zh',text_lang:'zh'}}); fillParameters({}); fillAuto({});
+    try {
+      await Promise.race([sdk.ready, new Promise((_, reject) => { ui.readyTimer = setTimeout(() => reject(new Error('等待 MaiBot 页面桥接超时，请在 MaiBot 内重新打开此页。')), 15000); })]);
+      if (!ui.alive) return; ui.sdk = sdk; document.documentElement.lang = 'zh-CN';
+      await loadState(true); ui.initializing = false; update();
+      if (!running() && !ui.audioUrl) message('已读取保存的设置，请按五步完成 API、底模、声音模式、参数与试听（试听可选）和自动语音回复设置。');
+      // Unlock after state; clicks and polls share the same FIFO as these boot reads.
+      try { await scanCatalog(); } catch (error) { if (ui.alive) setText('catalog-note', '扫描失败：' + diagnostic(error) + ' 请检查本机模型目录后重新扫描。'); }
+      try { await refreshRoles(); } catch (_) { /* 列表错误已显示，可手动刷新。 */ }
+      if (!ui.alive) return;
+      if (!normalizeProgress(uiResume.state.progress)) rememberProgress(null, uiResume.state);
+      resumeConfig(true);
+      if (canEnsureConnection() && ui.connection.status === 'idle') await ensureConnection();
+      await checkConfig();
+    } catch (error) { ui.initializing = false; message('初始化失败：' + diagnostic(error) + ' 仍可查看和编辑表单；请刷新状态重试读取配置，加载与试听前需先测试连接。', 'error'); }
+    finally { clearTimeout(ui.readyTimer); ui.readyTimer = null; update(); }
+  }
+  void boot();
+})();
+</script>
+</body>
+</html>

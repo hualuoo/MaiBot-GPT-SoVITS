@@ -1,0 +1,3 @@
+maibot-plugin-sdk>=2.20.0,<3
+aiohttp>=3.9,<4
+tomlkit>=0.13,<1

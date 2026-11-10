@@ -218,3 +218,13 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# MaiBot GPT-SoVITS local configuration and generated files
+*.tmp
+*.wav
+*.zip
+config.toml
+native-model-index.json
+data/
+logs/
+.DS_Store
